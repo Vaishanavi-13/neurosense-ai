@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Gamepad2, Play, RotateCcw } from 'lucide-react';
+import { Gamepad2, Play, RotateCcw, ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { gameService } from '../../services/gameService';
 import { useApp } from '../../hooks/useApp';
 
@@ -7,6 +8,7 @@ const ALL_CARDS = ['🧠', '🧬', '💊', '🩺', '🔬', '🏥', '🚑', '👨
 
 export default function MemoryGame() {
   const { t } = useApp();
+  const navigate = useNavigate();
   const [cards, setCards] = useState([]);
   const [flipped, setFlipped] = useState([]);
   const [solved, setSolved] = useState([]);
@@ -66,6 +68,12 @@ export default function MemoryGame() {
 
   return (
     <div className="flex flex-col h-[calc(100vh-8rem)] max-w-3xl mx-auto overflow-hidden animate-in fade-in duration-500">
+      <button 
+        onClick={() => navigate('/dashboard/games')}
+        className="flex items-center text-slate-500 hover:text-primary-600 dark:hover:text-primary-400 transition-colors mb-6 font-medium w-fit"
+      >
+        <ArrowLeft className="h-4 w-4 mr-2" /> {t.back_to_games}
+      </button>
       <div className="flex flex-col sm:flex-row justify-between items-center bg-white dark:bg-slate-900 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 flex-shrink-0 mb-4 z-10 transition-colors duration-200">
         <div>
           <h2 className="text-xl font-bold flex items-center text-slate-800 dark:text-white">

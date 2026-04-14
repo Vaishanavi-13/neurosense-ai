@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Gamepad2, Image as ImageIcon, Brain, ArrowRight, Info } from 'lucide-react';
+import { Gamepad2, Image as ImageIcon, Brain, ArrowRight, Info, ArrowLeft } from 'lucide-react';
 import Card from '../../components/Card';
 import { gameService } from '../../services/gameService';
 import { useApp } from '../../hooks/useApp';
@@ -14,7 +14,13 @@ export default function Games() {
   }, []);
 
   return (
-    <div className="space-y-6 max-w-5xl mx-auto">
+    <div className="space-y-6 max-w-5xl mx-auto animate-in fade-in duration-500">
+      <Link 
+        to="/dashboard"
+        className="flex items-center text-slate-500 hover:text-primary-600 dark:hover:text-primary-400 transition-colors font-medium"
+      >
+        <ArrowLeft className="h-4 w-4 mr-2" /> {t.back_to_dashboard}
+      </Link>
       <div>
         <h2 className="text-2xl font-bold text-slate-800 dark:text-white flex items-center">
           <Gamepad2 className="mr-2 h-6 w-6 text-primary-600 dark:text-primary-400" /> {t.games}

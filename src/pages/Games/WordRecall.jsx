@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Brain, Play, RotateCcw, Check, X } from 'lucide-react';
+import { Brain, Play, RotateCcw, Check, X, ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { gameService } from '../../services/gameService';
 import { useApp } from '../../hooks/useApp';
 
@@ -10,6 +11,7 @@ const WORDS = [
 
 export default function WordRecall() {
   const { t } = useApp();
+  const navigate = useNavigate();
   const [gameState, setGameState] = useState('idle'); // idle, showing, typing, finished
   const [wordsToShow, setWordsToShow] = useState([]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -75,6 +77,12 @@ export default function WordRecall() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-6 animate-in fade-in duration-500">
+      <button 
+        onClick={() => navigate('/dashboard/games')}
+        className="flex items-center text-slate-500 hover:text-primary-600 dark:hover:text-primary-400 transition-colors font-medium w-fit"
+      >
+        <ArrowLeft className="h-4 w-4 mr-2" /> {t.back_to_games}
+      </button>
       <div className="flex flex-col sm:flex-row justify-between items-center bg-white dark:bg-slate-900 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 transition-colors">
         <div>
           <h2 className="text-xl font-bold flex items-center text-slate-800 dark:text-white">

@@ -14,6 +14,8 @@ export const translations = {
     risk_assessment: "Risk Assessment",
     therapy: "Therapy",
     logout: "Logout",
+    back_to_dashboard: "Back to Dashboard",
+    back_to_games: "Back to Games",
     
     // Dashboard
     greeting: "Hello",
@@ -292,6 +294,8 @@ export const translations = {
     risk_assessment: "जोखीम मूल्यांकन",
     therapy: "थेरपी",
     logout: "लॉगआउट",
+    back_to_dashboard: "डॅशबोर्डवर परत जा",
+    back_to_games: "खेळांवर परत जा",
     
     // Dashboard
     greeting: "नमस्कार",
