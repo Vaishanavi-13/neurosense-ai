@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Gamepad2, Play, RotateCcw } from 'lucide-react';
 import { gameService } from '../../services/gameService';
+import { useApp } from '../../hooks/useApp';
 
 const ALL_CARDS = ['🧠', '🧬', '💊', '🩺', '🔬', '🏥', '🚑', '👨‍⚕️', '🍎', '🚗'];
 
 export default function MemoryGame() {
+  const { t } = useApp();
   const [cards, setCards] = useState([]);
   const [flipped, setFlipped] = useState([]);
   const [solved, setSolved] = useState([]);
@@ -53,9 +55,9 @@ export default function MemoryGame() {
       
       const timeTakenMs = Date.now() - startTime;
       const finalScore = Math.max(100 - (moves * 2), 10);
-      gameService.saveGameSession(`Memory Match (${gridSize === 'small' ? '4x3' : '4x4'})`, finalScore, timeTakenMs);
+      gameService.saveGameSession(`${t.memory_match} (${gridSize === 'small' ? '4x3' : '4x4'})`, finalScore, timeTakenMs);
     }
-  }, [solved, won, moves, startTime, cards.length, isPlaying, gridSize]);
+  }, [solved, won, moves, startTime, cards.length, isPlaying, gridSize, t.memory_match]);
 
   const handleCardClick = (index) => {
     if (!isPlaying || flipped.length === 2 || flipped.includes(index) || solved.includes(index)) return;
@@ -67,9 +69,9 @@ export default function MemoryGame() {
       <div className="flex flex-col sm:flex-row justify-between items-center bg-white dark:bg-slate-900 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 flex-shrink-0 mb-4 z-10 transition-colors duration-200">
         <div>
           <h2 className="text-xl font-bold flex items-center text-slate-800 dark:text-white">
-            <Gamepad2 className="mr-2 h-6 w-6 text-primary-600 dark:text-primary-400" /> Memory Match
+            <Gamepad2 className="mr-2 h-6 w-6 text-primary-600 dark:text-primary-400" /> {t.memory_match}
           </h2>
-          <p className="text-sm text-muted hidden sm:block">Find all the matching pairs</p>
+          <p className="text-sm text-muted hidden sm:block">{t.find_matching_pairs}</p>
         </div>
         
         <div className="flex items-center space-x-4 mt-2 sm:mt-0">
@@ -79,14 +81,14 @@ export default function MemoryGame() {
               onChange={(e) => setGridSize(e.target.value)}
               className="px-3 py-1.5 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-lg text-sm text-slate-700 dark:text-slate-200 outline-none focus:ring-2 focus:ring-primary-500 transition-all"
             >
-              <option value="small">Small (4x3)</option>
-              <option value="large">Large (4x4)</option>
+              <option value="small">{t.grid_small}</option>
+              <option value="large">{t.grid_large}</option>
             </select>
           )}
 
           {isPlaying && (
             <div className="text-right">
-              <p className="text-xs text-muted font-medium">MOVES</p>
+              <p className="text-xs text-muted font-medium">{t.moves.toUpperCase()}</p>
               <p className="text-xl font-bold text-slate-800 dark:text-white leading-none">{moves}</p>
             </div>
           )}
@@ -96,7 +98,7 @@ export default function MemoryGame() {
             className="btn-primary flex items-center py-1.5 px-4 text-sm"
           >
             {isPlaying || won ? <RotateCcw className="h-4 w-4 mr-1.5" /> : <Play className="h-4 w-4 mr-1.5" />}
-            {isPlaying || won ? 'Restart' : 'Start'}
+            {isPlaying || won ? t.restart : t.start}
           </button>
         </div>
       </div>
@@ -105,18 +107,18 @@ export default function MemoryGame() {
         {!isPlaying && !won && (
            <div className="w-full h-full max-h-72 flex flex-col items-center justify-center bg-slate-50 dark:bg-slate-900 border-2 border-dashed border-slate-200 dark:border-slate-800 p-6 text-center rounded-2xl transition-colors">
               <Gamepad2 className="h-12 w-12 text-slate-300 dark:text-slate-700 mb-3" />
-              <h3 className="text-xl font-bold text-slate-700 dark:text-slate-200">Test your memory</h3>
+              <h3 className="text-xl font-bold text-slate-700 dark:text-slate-200">{t.test_your_memory}</h3>
               <p className="text-muted mt-2 text-sm max-w-sm">
-                Select your grid size and find matches with the fewest moves possible.
+                {t.memory_game_instr}
               </p>
            </div>
         )}
 
         {won && (
            <div className="w-full h-full max-h-72 flex flex-col items-center justify-center bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl border-2 border-emerald-100 dark:border-emerald-900/30 p-6 text-center transition-colors">
-              <h3 className="text-2xl font-bold text-emerald-700 dark:text-emerald-400 mb-2">Excellent Work!</h3>
-              <p className="text-emerald-600 dark:text-emerald-300">Completed in {moves} moves.</p>
-              <p className="text-emerald-500 dark:text-emerald-500/70 text-sm mt-1">Score saved to profile.</p>
+              <h3 className="text-2xl font-bold text-emerald-700 dark:text-emerald-400 mb-2">{t.excellent_work}</h3>
+              <p className="text-emerald-600 dark:text-emerald-300">{t.completed_in_moves.replace('{moves}', moves)}</p>
+              <p className="text-emerald-500 dark:text-emerald-500/70 text-sm mt-1">{t.saved_to_profile}</p>
            </div>
         )}
 

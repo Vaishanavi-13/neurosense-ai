@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Mic, Square, Play, RotateCcw, UploadCloud, Loader2 } from 'lucide-react';
+import { useApp } from '../hooks/useApp';
 
 export default function VoiceRecorder({ onRecordingComplete, isProcessing, initialAudioBlob }) {
+  const { t } = useApp();
   const [isRecording, setIsRecording] = useState(false);
   const [audioUrl, setAudioUrl] = useState(null);
   const [recordingTime, setRecordingTime] = useState(0);
@@ -110,7 +112,7 @@ export default function VoiceRecorder({ onRecordingComplete, isProcessing, initi
             onClick={startRecording}
             className="flex items-center justify-center px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-full font-medium transition-colors shadow-sm"
           >
-            <Mic className="h-5 w-5 mr-2" /> Start Recording
+            <Mic className="h-5 w-5 mr-2" /> {t.start_recording}
           </button>
         )}
 
@@ -119,7 +121,7 @@ export default function VoiceRecorder({ onRecordingComplete, isProcessing, initi
             onClick={stopRecording}
             className="flex items-center justify-center px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-full font-medium transition-colors shadow-sm"
           >
-            <Square className="h-5 w-5 mr-2" /> Stop Recording
+            <Square className="h-5 w-5 mr-2" /> {t.stop_recording}
           </button>
         )}
 
@@ -131,7 +133,7 @@ export default function VoiceRecorder({ onRecordingComplete, isProcessing, initi
               disabled={isProcessing}
               className="flex items-center justify-center px-4 py-2 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-lg font-medium transition-colors disabled:opacity-50"
             >
-              <RotateCcw className="h-4 w-4 mr-2" /> Retry
+              <RotateCcw className="h-4 w-4 mr-2" /> {t.retry}
             </button>
           </div>
         )}
@@ -140,7 +142,7 @@ export default function VoiceRecorder({ onRecordingComplete, isProcessing, initi
       {isProcessing && (
         <div className="mt-6 flex items-center text-primary-600 dark:text-primary-400 font-medium">
           <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-          Analyzing Speech Patterns...
+          {t.analyzing_speech}
         </div>
       )}
     </div>

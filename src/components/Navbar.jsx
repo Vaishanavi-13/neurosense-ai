@@ -39,7 +39,7 @@ export default function Navbar() {
         <button 
           onClick={toggleTheme}
           className="p-2 text-slate-500 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
-          title={theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
+          title={theme === 'light' ? t.switch_dark : t.switch_light}
         >
           {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
         </button>

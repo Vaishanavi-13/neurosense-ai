@@ -92,7 +92,7 @@ export default function Dashboard() {
                    {getRiskLevelTranslated(riskAssessment?.riskLevel)}
                  </div>
                  <p className="text-sm text-slate-600 dark:text-slate-400 flex-1 leading-relaxed">
-                   {riskAssessment?.explanation || 'Based on your medical history'}
+                   {riskAssessment?.explanation || t.medical_history_basis}
                  </p>
                  <Link to="/dashboard/risk" className="btn-outline w-full mt-6 text-sm">{t.view_details}</Link>
                </div>
@@ -177,7 +177,7 @@ export default function Dashboard() {
                       </div>
                       <div>
                         <h4 className="font-semibold text-slate-800 dark:text-slate-100 group-hover:text-purple-700 dark:group-hover:text-purple-300">{t.speech}</h4>
-                        <p className="text-xs text-slate-500 dark:text-slate-400">Detect cognitive patterns</p>
+                        <p className="text-xs text-slate-500 dark:text-slate-400">{t.detect_patterns}</p>
                       </div>
                     </div>
                     <Play className="h-4 w-4 text-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -189,7 +189,7 @@ export default function Dashboard() {
                         <span className="font-bold">M</span>
                       </div>
                       <div>
-                        <h4 className="font-semibold text-slate-800 dark:text-slate-100 group-hover:text-primary-700 dark:group-hover:text-primary-300">Memory Cards</h4>
+                        <h4 className="font-semibold text-slate-800 dark:text-slate-100 group-hover:text-primary-700 dark:group-hover:text-primary-300">{t.memory_cards}</h4>
                       </div>
                     </div>
                     <Play className="h-4 w-4 text-primary-500 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -201,7 +201,7 @@ export default function Dashboard() {
                         <span className="font-bold">I</span>
                       </div>
                       <div>
-                        <h4 className="font-semibold text-slate-800 dark:text-slate-100 group-hover:text-orange-600 dark:group-hover:text-orange-300">Image Recall</h4>
+                        <h4 className="font-semibold text-slate-800 dark:text-slate-100 group-hover:text-orange-600 dark:group-hover:text-orange-300">{t.image_recall}</h4>
                       </div>
                     </div>
                     <Play className="h-4 w-4 text-orange-500 opacity-0 group-hover:opacity-100 transition-opacity" />

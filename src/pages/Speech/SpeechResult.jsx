@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { speechService } from '../../services/speechService';
+import { useApp } from '../../hooks/useApp';
 import Card from '../../components/Card';
 import TranscriptDisplay from '../../components/TranscriptDisplay';
 import { 
@@ -11,6 +12,7 @@ import {
 export default function SpeechResult() {
   const { resultId } = useParams();
   const navigate = useNavigate();
+  const { t } = useApp();
   const [result, setResult] = useState(null);
 
   useEffect(() => {
@@ -38,10 +40,10 @@ export default function SpeechResult() {
           onClick={() => navigate('/dashboard/speech')}
           className="flex items-center text-slate-500 hover:text-primary-600 dark:hover:text-primary-400 transition-colors font-medium"
         >
-          <ArrowLeft className="h-4 w-4 mr-2" /> Back to Tasks
+          <ArrowLeft className="h-4 w-4 mr-2" /> {t.back_to_tasks}
         </button>
         <span className="text-sm font-medium text-slate-400 dark:text-slate-500">
-          Result ID: {result.id.slice(0, 8)} | Date: {new Date(result.date).toLocaleDateString()}
+          {t.result_id}: {result.id.slice(0, 8)} | {t.date}: {new Date(result.date).toLocaleDateString()}
         </span>
       </div>
 
@@ -52,9 +54,9 @@ export default function SpeechResult() {
              <div className={`mx-auto w-16 h-16 rounded-full transition-colors ${riskBg} ${riskColor} flex items-center justify-center mb-4`}>
                <RiskIcon className="h-8 w-8" />
              </div>
-             <p className="text-sm font-semibold text-muted uppercase tracking-widest mb-1">Detected Risk Level</p>
+             <p className="text-sm font-semibold text-muted uppercase tracking-widest mb-1">{t.detected_risk}</p>
              <h2 className={`text-4xl font-extrabold mb-4 transition-colors ${riskColor}`}>
-               {result.riskLevel}
+               {result.riskLevel === 'Low' ? t.low : result.riskLevel === 'Medium' ? t.medium : t.high}
              </h2>
              <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2.5 mb-2 transition-colors">
                 <div 
@@ -62,10 +64,10 @@ export default function SpeechResult() {
                   style={{ width: result.confidenceScore }}
                 ></div>
              </div>
-             <p className="text-xs text-muted font-medium">Model Confidence: {result.confidenceScore}</p>
+             <p className="text-xs text-muted font-medium">{t.model_confidence}: {result.confidenceScore}</p>
           </Card>
           
-          <Card title="AI Recommendations">
+          <Card title={t.ai_recommendations}>
              <ul className="text-sm text-slate-600 dark:text-slate-300 space-y-3 mt-4 transition-colors">
                 {isHighRisk && (
                   <li className="flex items-start">
@@ -79,12 +81,12 @@ export default function SpeechResult() {
                 </li>
                 <li className="flex items-start">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary-500 mt-1.5 mr-2 flex-shrink-0"></span>
-                  Review performance trends weekly.
+                  {t.review_performance_weekly || "Review performance trends weekly."}
                 </li>
              </ul>
              <Link to="/dashboard/therapy" className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 text-sm font-semibold mt-6 inline-block transition-colors">
-               View Full Therapy Plan &rarr;
-             </Link>
+                {t.view_full_therapy} &rarr;
+              </Link>
           </Card>
         </div>
 
@@ -93,31 +95,31 @@ export default function SpeechResult() {
           <div className="grid grid-cols-3 gap-4">
             <Card className="text-center p-4">
               <Activity className="h-6 w-6 text-blue-500 dark:text-blue-400 mx-auto mb-2" />
-              <p className="text-xs text-muted uppercase font-semibold">Speech Rate</p>
+              <p className="text-xs text-muted uppercase font-semibold">{t.speech_rate}</p>
               <p className="text-2xl font-bold text-slate-800 dark:text-white transition-colors">{result.metrics.wpm}</p>
-              <p className="text-xs text-slate-400 dark:text-slate-600">Words / Min</p>
+              <p className="text-xs text-slate-400 dark:text-slate-600">{t.words_per_min}</p>
             </Card>
             <Card className="text-center p-4">
               <PauseCircle className="h-6 w-6 text-orange-500 dark:text-orange-400 mx-auto mb-2" />
-              <p className="text-xs text-muted uppercase font-semibold">Long Pauses</p>
+              <p className="text-xs text-muted uppercase font-semibold">{t.long_pauses}</p>
               <p className="text-2xl font-bold text-slate-800 dark:text-white transition-colors">{result.metrics.pauseCount}</p>
-              <p className="text-xs text-slate-400 dark:text-slate-600">Counts {">"} 2s</p>
+              <p className="text-xs text-slate-400 dark:text-slate-600">{t.counts_gt_2s}</p>
             </Card>
             <Card className="text-center p-4">
               <RefreshCcw className="h-6 w-6 text-purple-500 dark:text-purple-400 mx-auto mb-2" />
-              <p className="text-xs text-muted uppercase font-semibold">Repetition Rate</p>
+              <p className="text-xs text-muted uppercase font-semibold">{t.repetition_rate}</p>
               <p className="text-2xl font-bold text-slate-800 dark:text-white transition-colors">{(parseFloat(result.metrics.repetitionRate)*100).toFixed(0)}%</p>
-              <p className="text-xs text-slate-400 dark:text-slate-600">Repeated words</p>
+              <p className="text-xs text-slate-400 dark:text-slate-600">{t.repeated_words}</p>
             </Card>
           </div>
 
-          <Card title="Speech Analysis Details" className="h-full">
+          <Card title={t.speech_analysis_details} className="h-full">
             <div className="mt-4">
               <TranscriptDisplay transcript={result.transcript} highlights={result.highlights} />
             </div>
             <div className="mt-8 flex justify-end">
               <Link to="/dashboard/speech" className="btn-primary">
-                Complete Another Task
+                {t.complete_another}
               </Link>
             </div>
           </Card>

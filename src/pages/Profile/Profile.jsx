@@ -5,8 +5,8 @@ import { UserCircle, Mail, Calendar as CalendarIcon, FileText } from 'lucide-rea
 import { useApp } from '../../hooks/useApp';
 
 export default function Profile() {
-  const { user, logout } = useAuth();
   const { t } = useApp();
+  const { user, logout } = useAuth();
 
   return (
     <div className="max-w-3xl mx-auto space-y-6">
@@ -33,23 +33,23 @@ export default function Profile() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-6 border-t border-slate-100 dark:border-slate-800">
               <div>
                 <p className="text-sm font-medium text-muted flex items-center transition-colors">
-                  <CalendarIcon className="h-4 w-4 mr-2" /> Age
+                  <CalendarIcon className="h-4 w-4 mr-2" /> {t.age}
                 </p>
-                <p className="font-semibold text-slate-800 dark:text-slate-200 mt-1 transition-colors">{user?.age || 'N/A'} years</p>
+                <p className="font-semibold text-slate-800 dark:text-slate-200 mt-1 transition-colors">{user?.age || 'N/A'} {t.years}</p>
               </div>
               
               <div>
                 <p className="text-sm font-medium text-muted flex items-center transition-colors">
-                  <FileText className="h-4 w-4 mr-2" /> Medical History
+                  <FileText className="h-4 w-4 mr-2" /> {t.medical_history}
                 </p>
-                <p className="font-semibold text-slate-800 dark:text-slate-200 mt-1 transition-colors">{user?.medicalHistory || 'None provided'}</p>
+                <p className="font-semibold text-slate-800 dark:text-slate-200 mt-1 transition-colors">{user?.medicalHistory || t.none_provided}</p>
               </div>
             </div>
           </div>
         </div>
         
         <div className="bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800 p-4 -mx-6 -mb-6 mt-6 rounded-b-xl flex justify-between items-center transition-colors">
-           <button className="btn-outline">Edit Profile</button>
+           <button className="btn-outline">{t.edit_profile}</button>
            <button 
              onClick={logout}
              className="text-red-500 hover:text-red-600 dark:hover:text-red-400 font-medium px-4 py-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
@@ -61,7 +61,7 @@ export default function Profile() {
       
       <div className="text-center text-slate-400 dark:text-slate-500 text-sm pt-8 transition-colors">
         <p>NeuroSense-AI Version 1.0.0</p>
-        <p>© 2026 NeuroSense AI. All rights reserved.</p>
+        <p>© 2026 NeuroSense AI. {t.rights_reserved}</p>
       </div>
     </div>
   );

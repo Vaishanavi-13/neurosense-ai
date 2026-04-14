@@ -4,53 +4,53 @@ import { ArrowLeft, CheckCircle, ChevronRight, ChevronLeft } from 'lucide-react'
 import VoiceRecorder from '../../components/VoiceRecorder';
 import Card from '../../components/Card';
 import { speechService } from '../../services/speechService';
-
-const qaQuestions = [
-  "What did you do yesterday?",
-  "Describe your daily routine.",
-  "Tell me about your family.",
-  "What is your favorite food?"
-];
+import { useApp } from '../../hooks/useApp';
 
 // Content for non-QA tasks
-const getTaskContent = (taskId) => {
+const getTaskContent = (taskId, t) => {
   switch (taskId) {
     case 'picture-description':
       return {
-        title: 'Picture Description',
-        instructions: 'Please look at the image below and describe everything you see happening. Try to speak for at least 30 seconds.',
+        title: t.image_recall,
+        instructions: t.picture_instructions,
         media: (
           <div className="w-full h-64 bg-slate-200 dark:bg-slate-800 rounded-xl flex items-center justify-center overflow-hidden border border-slate-300 dark:border-slate-700 transition-colors">
              <div className="text-center text-slate-500 dark:text-slate-400">
                <span className="block text-4xl mb-2">🖼️</span>
-               <p className="font-medium">Cookie Theft Picture</p>
-               <p className="text-xs mt-1">(Standard cognitive assessment image)</p>
+               <p className="font-medium">{t.cookie_theft_title}</p>
+               <p className="text-xs mt-1">{t.cookie_theft_desc}</p>
              </div>
           </div>
         )
       };
     case 'reading':
       return {
-        title: 'Reading Task',
-        instructions: 'Please read the following passage aloud in your normal speaking voice.',
+        title: t.word_recall_test,
+        instructions: t.reading_instructions,
         media: (
           <div className="p-6 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-900/30 rounded-xl transition-colors">
              <p className="text-xl font-serif text-slate-800 dark:text-slate-200 leading-relaxed italic">
-               "The sun was shining brightly as the children ran out to play. 
-                They took their favorite ball and hurried across the green grass. 
-                Suddenly, a small dog appeared from behind the bushes, wagging its tail eagerly."
+               "{t.reading_passage}"
              </p>
           </div>
         )
       };
     default:
-      return { title: 'Unknown Task', instructions: 'Task not found.', media: null };
+      return { title: t.unknown_task, instructions: t.task_not_found, media: null };
   }
 };
 
 export default function ActiveSpeechTask() {
   const { taskId } = useParams();
   const navigate = useNavigate();
+  const { t } = useApp();
+
+  const qaQuestions = [
+    t.qa_q1,
+    t.qa_q2,
+    t.qa_q3,
+    t.qa_q4
+  ];
 
   // Basic task state
   const [audioBlob, setAudioBlob] = useState(null);
@@ -79,8 +79,6 @@ export default function ActiveSpeechTask() {
     
     let submitBlob;
     if (taskId === 'question-answer') {
-      // In a real scenario, you'd send an array of blobs or a zip. 
-      // For mock purposes, we just submit the first blob.
       submitBlob = qaResponses[0] || new Blob();
     } else {
       submitBlob = audioBlob;
@@ -110,13 +108,13 @@ export default function ActiveSpeechTask() {
           onClick={() => navigate('/dashboard/speech')}
           className="flex items-center text-slate-500 hover:text-primary-600 dark:hover:text-primary-400 transition-colors mb-6 font-medium"
         >
-          <ArrowLeft className="h-4 w-4 mr-2" /> Back to Tasks
+          <ArrowLeft className="h-4 w-4 mr-2" /> {t.back_to_tasks}
         </button>
 
         <Card className="mb-8 border-t-4 border-t-primary-500">
-          <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-2">Question Answer</h2>
+          <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-2">{t.question_num} {t.answer_label || ""}</h2>
           <p className="text-lg text-muted mb-6 pb-6 border-b border-slate-100 dark:border-slate-800 transition-colors">
-            Listen to or read the questions sequentially. Record your answer for each.
+            {t.task_completed_desc.split('.')[0]}. {t.recall_instr}
           </p>
 
           {isCompleted ? (
@@ -124,22 +122,22 @@ export default function ActiveSpeechTask() {
               <div className="w-20 h-20 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mx-auto mb-6 transition-colors">
                 <CheckCircle className="h-10 w-10 text-emerald-600 dark:text-emerald-400" />
               </div>
-              <h3 className="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mb-4 transition-colors">Task Completed!</h3>
+              <h3 className="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mb-4 transition-colors">{t.task_completed}</h3>
               <p className="text-muted mb-8 max-w-sm mx-auto">
-                You have successfully recorded answers for all {qaQuestions.length} questions. You're ready to submit.
+                {t.task_completed_desc}
               </p>
               <button 
                 onClick={handleSubmit}
                 disabled={isProcessing}
                 className="btn-primary flex items-center justify-center text-lg px-10 py-4 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all mx-auto w-full sm:w-auto"
               >
-                {isProcessing ? 'Analyzing...' : 'Submit All Responses'}
+                {isProcessing ? t.analyzing : t.submit_all}
               </button>
             </div>
           ) : (
             <div className="animate-in fade-in duration-300 relative">
               <div className="mb-4 flex items-center justify-between font-semibold text-muted uppercase tracking-widest text-xs transition-colors">
-                <span>Question {currentQIndex + 1} of {qaQuestions.length}</span>
+                <span>{t.question_num} {currentQIndex + 1} {t.of} {qaQuestions.length}</span>
                 <div className="flex space-x-1">
                   {qaQuestions.map((_, i) => (
                     <div key={i} className={`h-2 w-8 rounded-full transition-all duration-300 ${i <= currentQIndex ? 'bg-primary-500' : 'bg-slate-200 dark:bg-slate-800'}`} />
@@ -151,7 +149,7 @@ export default function ActiveSpeechTask() {
                  <p className="text-2xl md:text-3xl font-bold text-blue-900 dark:text-blue-300 mb-4 leading-tight">
                    "{currentQ}"
                  </p>
-                 <p className="text-blue-700 dark:text-blue-400">Please provide as many details as possible.</p>
+                 <p className="text-blue-700 dark:text-blue-400">{t.provide_details}</p>
               </div>
 
               {/* Recorder */}
@@ -170,7 +168,7 @@ export default function ActiveSpeechTask() {
                   disabled={currentQIndex === 0}
                   className="flex items-center px-5 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg disabled:opacity-30 font-medium transition-colors"
                 >
-                  <ChevronLeft className="h-5 w-5 mr-1" /> Previous
+                  <ChevronLeft className="h-5 w-5 mr-1" /> {t.previous}
                 </button>
 
                 <button 
@@ -178,7 +176,7 @@ export default function ActiveSpeechTask() {
                   disabled={!qaResponses[currentQIndex]}
                   className="flex items-center px-8 py-3 bg-primary-600 text-white hover:bg-primary-700 rounded-xl disabled:opacity-50 font-bold transition-all shadow-sm"
                 >
-                  {currentQIndex === qaQuestions.length - 1 ? 'Finish' : 'Next'} <ChevronRight className="h-5 w-5 ml-2" />
+                  {currentQIndex === qaQuestions.length - 1 ? t.finish : t.next} <ChevronRight className="h-5 w-5 ml-2" />
                 </button>
               </div>
             </div>
@@ -191,7 +189,7 @@ export default function ActiveSpeechTask() {
   // ----------------------------------------------------
   // BASIC TASKS FLOW (Picture Description, Reading)
   // ----------------------------------------------------
-  const content = getTaskContent(taskId);
+  const content = getTaskContent(taskId, t);
 
   return (
     <div className="max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -199,7 +197,7 @@ export default function ActiveSpeechTask() {
         onClick={() => navigate('/dashboard/speech')}
         className="flex items-center text-slate-500 hover:text-primary-600 dark:hover:text-primary-400 transition-colors mb-6 font-medium transition-colors"
       >
-        <ArrowLeft className="h-4 w-4 mr-2" /> Back to Tasks
+        <ArrowLeft className="h-4 w-4 mr-2" /> {t.back_to_tasks}
       </button>
 
       <Card className="mb-8 border-t-4 border-t-primary-500">
@@ -226,7 +224,7 @@ export default function ActiveSpeechTask() {
                className="btn-primary text-lg px-10 py-4 flex items-center shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all"
              >
                <CheckCircle className="h-6 w-6 mr-3" />
-               Submit Recording for Analysis
+               {t.submit_all.replace('All Responses', 'Recording')}
              </button>
           </div>
         )}

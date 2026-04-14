@@ -3,8 +3,10 @@ import Card from '../../components/Card';
 import Chart from '../../components/Chart';
 import { Calendar, TrendingUp, Clock, FileText, Database } from 'lucide-react';
 import { gameService } from '../../services/gameService';
+import { useApp } from '../../hooks/useApp';
 
 export default function Progress() {
+  const { t } = useApp();
   const [logs, setLogs] = useState([]);
   const hasData = logs.length > 0;
 
@@ -25,9 +27,9 @@ export default function Progress() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-2xl font-bold text-slate-800 dark:text-white flex items-center transition-colors">
-            <TrendingUp className="mr-2 h-6 w-6 text-primary-600 dark:text-primary-400" /> My Progress
+            <TrendingUp className="mr-2 h-6 w-6 text-primary-600 dark:text-primary-400" /> {t.my_progress_title}
           </h2>
-          <p className="text-muted">Track your cognitive improvements over time.</p>
+          <p className="text-muted">{t.progress_page_desc}</p>
         </div>
       </div>
 
@@ -36,36 +38,36 @@ export default function Progress() {
           <div className="h-24 w-24 rounded-full bg-slate-50 dark:bg-slate-800 text-slate-400 dark:text-slate-500 flex items-center justify-center mb-6 transition-colors">
             <Database className="h-12 w-12" />
           </div>
-          <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-2 transition-colors">No progress data available yet</h3>
+          <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-2 transition-colors">{t.no_progress}</h3>
           <p className="text-muted max-w-sm mb-8 text-lg">
-            Complete your first cognitive game to start generating progress charts and tracking your daily activity.
+            {t.no_progress_desc}
           </p>
         </div>
       ) : (
         <>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card title="Cognitive Scores" subtitle="All recent game scores" icon={TrendingUp}>
+            <Card title={t.cognitive_scores} subtitle={t.recent_game_scores} icon={TrendingUp}>
               <div className="h-72 mt-4">
                  <Chart data={getChartData()} type="line" dataKeys={['score']} colors={['#0ea5e9']} />
               </div>
             </Card>
             
-            <Card title="Time Taken (ms)" subtitle="Processing speed across games" icon={Clock}>
+            <Card title={t.time_taken_ms} subtitle={t.processing_speed} icon={Clock}>
               <div className="h-72 mt-4">
                  <Chart data={getChartData()} type="line" dataKeys={['time']} colors={['#14b8a6']} />
               </div>
             </Card>
           </div>
 
-          <Card title="Activity Log" icon={FileText} className="overflow-hidden">
+          <Card title={t.activity_log} icon={FileText} className="overflow-hidden">
             <div className="overflow-x-auto mt-4">
               <table className="w-full text-left border-collapse">
                 <thead>
                    <tr className="border-b border-slate-200 dark:border-slate-800 text-sm font-medium text-muted uppercase tracking-wider transition-colors">
-                    <th className="p-4">Date</th>
-                    <th className="p-4">Exercise</th>
-                    <th className="p-4 text-center">Score</th>
-                    <th className="p-4 text-center">Duration</th>
+                    <th className="p-4">{t.date_col}</th>
+                    <th className="p-4">{t.exercise_col}</th>
+                    <th className="p-4 text-center">{t.score_col}</th>
+                    <th className="p-4 text-center">{t.duration_col}</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 dark:divide-slate-800 transition-colors">
