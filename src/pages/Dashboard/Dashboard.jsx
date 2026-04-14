@@ -4,6 +4,7 @@ import Card from '../../components/Card';
 import Chart from '../../components/Chart';
 import { Link } from 'react-router-dom';
 import { gameService } from '../../services/gameService';
+import { riskService } from '../../services/riskService';
 import { 
   Activity, 
   Brain, 
@@ -12,34 +13,30 @@ import {
   TrendingUp, 
   AlertTriangle,
   Play,
-  Gamepad2
+  Gamepad2,
+  ShieldAlert
 } from 'lucide-react';
 
 export default function Dashboard() {
   const { user } = useAuth();
   const [logs, setLogs] = useState([]);
+  const [riskAssessment, setRiskAssessment] = useState(null);
   const hasData = logs.length > 0;
 
   useEffect(() => {
     setLogs(gameService.getUserLogs());
-  }, []);
+    setRiskAssessment(riskService.calculateRisk(user));
+  }, [user]);
 
   const getRecentChartData = () => {
     if (!hasData) return [];
-    // Super basic mock aggregation just to show something when there is >0 data
-    return logs.slice(-7).map((log, i) => ({
+    return logs.slice(-7).map((log) => ({
       name: new Date(log.date).toLocaleDateString(undefined, { weekday: 'short' }),
       score: log.score,
-      avg: Math.max(log.score - 5, 0)
     }));
   };
 
-  const getLatestActivity = () => {
-    if (!hasData) return null;
-    return logs[logs.length - 1];
-  };
-
-  const latest = getLatestActivity();
+  const latest = hasData ? logs[logs.length - 1] : null;
 
   return (
     <div className="space-y-6">
@@ -56,17 +53,36 @@ export default function Dashboard() {
       </div>
 
       {!hasData ? (
-        <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-12 text-center flex flex-col items-center">
-          <div className="h-24 w-24 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center mb-6">
-            <Gamepad2 className="h-12 w-12" />
-          </div>
-          <h3 className="text-2xl font-bold text-slate-800 mb-2">No activity yet.</h3>
-          <p className="text-slate-500 max-w-sm mb-8 text-lg">
-            Start playing cognitive games to see your daily progress, stats, and risk assessment models right here!
-          </p>
-          <Link to="/dashboard/games" className="btn-primary text-lg px-8 py-3 w-full sm:w-auto">
-            Start Game
-          </Link>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+           <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-slate-100 p-8 text-center flex flex-col items-center justify-center min-h-[400px]">
+             <div className="h-20 w-20 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center mb-6">
+               <Gamepad2 className="h-10 w-10" />
+             </div>
+             <h3 className="text-2xl font-bold text-slate-800 mb-2">No game activity yet</h3>
+             <p className="text-slate-500 max-w-sm mb-8 text-lg">
+               Start playing cognitive games to see your daily progress charts and generate comprehensive scoring metrics.
+             </p>
+             <Link to="/dashboard/games" className="btn-primary text-lg px-8 py-3 w-full sm:w-auto">
+               Begin Training
+             </Link>
+           </div>
+           
+           <div className="lg:col-span-1">
+             <Card title="Initial Clinical Assessment" icon={ShieldAlert} className="h-full">
+               <div className="flex flex-col h-full bg-slate-50 rounded-xl p-6 mt-4 border border-slate-100 items-center text-center">
+                 <h4 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-2">Baseline Risk Level</h4>
+                 <div className={`text-4xl font-extrabold mb-4 
+                   ${riskAssessment?.riskLevel === 'Low' ? 'text-emerald-500' : 
+                     riskAssessment?.riskLevel === 'Medium' ? 'text-yellow-500' : 'text-red-500'}`}>
+                   {riskAssessment?.riskLevel || 'Unknown'}
+                 </div>
+                 <p className="text-sm text-slate-600 flex-1 leading-relaxed">
+                   {riskAssessment?.explanation || 'Based on your medical history'}
+                 </p>
+                 <Link to="/dashboard/risk" className="btn-outline w-full mt-6 text-sm">View Full Details</Link>
+               </div>
+             </Card>
+           </div>
         </div>
       ) : (
         <>
@@ -108,18 +124,21 @@ export default function Dashboard() {
               </div>
             </Card>
 
-            <Card className="hover:border-emerald-200 transition-colors">
-               <div className="flex items-center">
-                <div className="h-12 w-12 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mr-4">
-                  <AlertTriangle className="h-6 w-6" />
+            <Link to="/dashboard/risk" className="block focus:outline-none focus:ring-2 focus:ring-emerald-500 rounded-xl">
+              <Card className="hover:border-emerald-200 transition-colors h-full">
+                 <div className="flex items-center">
+                  <div className="h-12 w-12 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mr-4">
+                    <AlertTriangle className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-slate-500">Composite Risk</p>
+                    <h3 className={`text-2xl font-bold ${riskAssessment?.riskLevel === 'Low' ? 'text-emerald-600' : riskAssessment?.riskLevel === 'Medium' ? 'text-yellow-600' : 'text-red-600'}`}>
+                      {riskAssessment?.riskLevel || 'Unknown'}
+                    </h3>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-slate-500">Risk Level</p>
-                  <h3 className="text-2xl font-bold text-emerald-600">Low</h3>
-                  <p className="text-xs text-slate-400 mt-1">Sufficient baseline</p>
-                </div>
-              </div>
-            </Card>
+              </Card>
+            </Link>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -148,16 +167,16 @@ export default function Dashboard() {
                     <Play className="h-4 w-4 text-primary-500 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </Link>
                   
-                  <Link to="/dashboard/games/reaction" className="block p-4 rounded-xl border border-slate-100 hover:border-teal-300 hover:bg-teal-50 transition-all flex items-center justify-between group">
+                  <Link to="/dashboard/games/image-recall" className="block p-4 rounded-xl border border-slate-100 hover:border-orange-300 hover:bg-orange-50 transition-all flex items-center justify-between group">
                     <div className="flex items-center">
-                      <div className="h-10 w-10 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center mr-3">
-                        <span className="font-bold">R</span>
+                      <div className="h-10 w-10 rounded-full bg-orange-100 text-orange-500 flex items-center justify-center mr-3">
+                        <span className="font-bold">I</span>
                       </div>
                       <div>
-                        <h4 className="font-semibold text-slate-800 group-hover:text-teal-700">Reaction Time</h4>
+                        <h4 className="font-semibold text-slate-800 group-hover:text-orange-600">Image Recall</h4>
                       </div>
                     </div>
-                    <Play className="h-4 w-4 text-teal-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <Play className="h-4 w-4 text-orange-500 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </Link>
                 </div>
               </Card>
