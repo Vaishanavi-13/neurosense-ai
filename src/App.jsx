@@ -11,7 +11,7 @@ import Register from './pages/Auth/Register';
 import Dashboard from './pages/Dashboard/Dashboard';
 import GamesIndex from './pages/Games/Games';
 import MemoryGame from './pages/Games/MemoryGame';
-import ReactionGame from './pages/Games/ReactionGame';
+import ImageRecallGame from './pages/Games/ImageRecallGame';
 import WordRecall from './pages/Games/WordRecall';
 import Progress from './pages/Progress/Progress';
 import RiskAssessment from './pages/Risk/RiskAssessment';
@@ -58,7 +58,7 @@ export default function App() {
                 <Route index element={<Dashboard />} />
                 <Route path="games" element={<GamesIndex />} />
                 <Route path="games/memory" element={<MemoryGame />} />
-                <Route path="games/reaction" element={<ReactionGame />} />
+                <Route path="games/image-recall" element={<ImageRecallGame />} />
                 <Route path="games/recall" element={<WordRecall />} />
                 <Route path="progress" element={<Progress />} />
                 <Route path="risk" element={<RiskAssessment />} />

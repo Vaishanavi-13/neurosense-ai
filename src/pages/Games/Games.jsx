@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Gamepad2, Clock, Brain, ArrowRight, Info } from 'lucide-react';
+import { Gamepad2, Image as ImageIcon, Brain, ArrowRight, Info } from 'lucide-react';
 import Card from '../../components/Card';
 import { gameService } from '../../services/gameService';
 
@@ -41,15 +41,15 @@ export default function Games() {
           </Link>
         </Card>
 
-        <Card className="hover:border-teal-200 transition-all hover:shadow-md flex flex-col h-full cursor-pointer group">
-          <div className="h-16 w-16 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center mb-6 align-middle">
-            <Clock className="h-8 w-8" />
+        <Card className="hover:border-orange-200 transition-all hover:shadow-md flex flex-col h-full cursor-pointer group">
+          <div className="h-16 w-16 rounded-2xl bg-orange-50 text-orange-500 flex items-center justify-center mb-6 align-middle">
+            <ImageIcon className="h-8 w-8" />
           </div>
-          <h3 className="text-xl font-bold text-slate-800 mb-2">Reaction Time</h3>
+          <h3 className="text-xl font-bold text-slate-800 mb-2">Image Recall</h3>
           <p className="text-slate-600 flex-1">
-            Measures your visual reflexes and processing speed. Click the screen as soon as the color changes.
+            Test your visual encoding. Memorize 5 images shown on screen and type back their names after they disappear.
           </p>
-          <Link to="/dashboard/games/reaction" className="btn-secondary mt-6 group-hover:bg-secondary-600 w-full flex items-center justify-center">
+          <Link to="/dashboard/games/image-recall" className="bg-orange-500 text-white hover:bg-orange-600 px-4 py-2 rounded-lg transition-colors font-medium shadow-sm mt-6 w-full flex items-center justify-center active:scale-95">
             Play Now <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
         </Card>
