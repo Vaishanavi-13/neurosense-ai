@@ -9,12 +9,14 @@ import {
   HeartHandshake, 
   UserCircle,
   LogOut,
-  BrainCircuit
+  BrainCircuit,
+  Mic
 } from 'lucide-react';
 
 const navItems = [
   { name: 'Overview', path: '/dashboard', icon: LayoutDashboard, exact: true },
   { name: 'Cognitive Games', path: '/dashboard/games', icon: Gamepad2 },
+  { name: 'Speech Analysis', path: '/dashboard/speech', icon: Mic },
   { name: 'Progress', path: '/dashboard/progress', icon: TrendingUp },
   { name: 'Risk Assessment', path: '/dashboard/risk', icon: ShieldAlert },
   { name: 'Therapy', path: '/dashboard/therapy', icon: HeartHandshake },

@@ -18,6 +18,12 @@ import RiskAssessment from './pages/Risk/RiskAssessment';
 import Recommendations from './pages/Therapy/Recommendations';
 import Profile from './pages/Profile/Profile';
 
+// Voice/Speech Tasks
+import SpeechTasksIndex from './pages/Speech/SpeechTasksIndex';
+import ActiveSpeechTask from './pages/Speech/ActiveSpeechTask';
+import SpeechResult from './pages/Speech/SpeechResult';
+import SpeechHistory from './pages/Speech/SpeechHistory';
+
 const ProtectedRoute = ({ children }) => {
   const { user } = useAuth();
   if (!user) {
@@ -60,6 +66,13 @@ export default function App() {
                 <Route path="games/memory" element={<MemoryGame />} />
                 <Route path="games/image-recall" element={<ImageRecallGame />} />
                 <Route path="games/recall" element={<WordRecall />} />
+                
+                {/* Speech Tasks */}
+                <Route path="speech" element={<SpeechTasksIndex />} />
+                <Route path="speech/task/:taskId" element={<ActiveSpeechTask />} />
+                <Route path="speech/result/:resultId" element={<SpeechResult />} />
+                <Route path="speech/history" element={<SpeechHistory />} />
+                
                 <Route path="progress" element={<Progress />} />
                 <Route path="risk" element={<RiskAssessment />} />
                 <Route path="therapy" element={<Recommendations />} />

@@ -14,7 +14,8 @@ import {
   AlertTriangle,
   Play,
   Gamepad2,
-  ShieldAlert
+  ShieldAlert,
+  Mic
 } from 'lucide-react';
 
 export default function Dashboard() {
@@ -60,10 +61,13 @@ export default function Dashboard() {
              </div>
              <h3 className="text-2xl font-bold text-slate-800 mb-2">No game activity yet</h3>
              <p className="text-slate-500 max-w-sm mb-8 text-lg">
-               Start playing cognitive games to see your daily progress charts and generate comprehensive scoring metrics.
+               Start with a speech assessment or play cognitive games to see your daily progress charts and generate comprehensive scoring metrics.
              </p>
-             <Link to="/dashboard/games" className="btn-primary text-lg px-8 py-3 w-full sm:w-auto">
-               Begin Training
+             <Link to="/dashboard/speech" className="btn-primary flex items-center justify-center text-lg px-8 py-3 w-full sm:w-auto mt-4 mb-4">
+               <Mic className="h-5 w-5 mr-3" /> Start Voice Analysis
+             </Link>
+             <Link to="/dashboard/games" className="text-primary-600 hover:text-primary-800 font-medium">
+               Or explore cognitive games
              </Link>
            </div>
            
@@ -153,8 +157,21 @@ export default function Dashboard() {
 
             {/* Recommended Actions */}
             <div className="space-y-6">
-              <Card title="Continue Training" icon={Brain}>
+              <Card title="Assessments & Training" icon={Brain}>
                 <div className="space-y-4 mt-2">
+                  <Link to="/dashboard/speech" className="block p-4 rounded-xl border border-slate-100 hover:border-purple-300 hover:bg-purple-50 transition-all flex items-center justify-between group">
+                    <div className="flex items-center">
+                      <div className="h-10 w-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center mr-3">
+                        <Mic className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-slate-800 group-hover:text-purple-700">Speech Analysis</h4>
+                        <p className="text-xs text-slate-500">Detect cognitive patterns</p>
+                      </div>
+                    </div>
+                    <Play className="h-4 w-4 text-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </Link>
+                  
                   <Link to="/dashboard/games/memory" className="block p-4 rounded-xl border border-slate-100 hover:border-primary-300 hover:bg-primary-50 transition-all flex items-center justify-between group">
                     <div className="flex items-center">
                       <div className="h-10 w-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mr-3">

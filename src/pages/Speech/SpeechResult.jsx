@@ -1,0 +1,128 @@
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import { speechService } from '../../services/speechService';
+import Card from '../../components/Card';
+import TranscriptDisplay from '../../components/TranscriptDisplay';
+import { 
+  ArrowLeft, ShieldAlert, Activity, 
+  PauseCircle, RefreshCcw, TrendingUp, CheckCircle, AlertTriangle 
+} from 'lucide-react';
+
+export default function SpeechResult() {
+  const { resultId } = useParams();
+  const navigate = useNavigate();
+  const [result, setResult] = useState(null);
+
+  useEffect(() => {
+    const data = speechService.getResultById(resultId);
+    if (data) {
+      setResult(data);
+    } else {
+      // If no result found, maybe redirect or show error
+      navigate('/dashboard/speech');
+    }
+  }, [resultId, navigate]);
+
+  if (!result) return <div className="p-8 text-center text-slate-500">Loading analysis...</div>;
+
+  const isHighRisk = result.riskLevel === 'High';
+  const isMediumRisk = result.riskLevel === 'Medium';
+  const riskColor = isHighRisk ? 'text-red-600' : isMediumRisk ? 'text-yellow-600' : 'text-emerald-600';
+  const riskBg = isHighRisk ? 'bg-red-50' : isMediumRisk ? 'bg-yellow-50' : 'bg-emerald-50';
+  const RiskIcon = isHighRisk ? AlertTriangle : isMediumRisk ? ShieldAlert : CheckCircle;
+
+  return (
+    <div className="max-w-5xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div className="flex items-center justify-between">
+         <button 
+          onClick={() => navigate('/dashboard/speech')}
+          className="flex items-center text-slate-500 hover:text-primary-600 transition-colors font-medium"
+        >
+          <ArrowLeft className="h-4 w-4 mr-2" /> Back to Tasks
+        </button>
+        <span className="text-sm font-medium text-slate-400">
+          Result ID: {result.id.slice(0, 8)} | Date: {new Date(result.date).toLocaleDateString()}
+        </span>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Risk Assessment Summary */}
+        <div className="md:col-span-1 space-y-6">
+          <Card className={`text-center border-t-4 ${isHighRisk ? 'border-t-red-500' : isMediumRisk ? 'border-t-yellow-500' : 'border-t-emerald-500'}`}>
+             <div className={`mx-auto w-16 h-16 rounded-full ${riskBg} ${riskColor} flex items-center justify-center mb-4`}>
+               <RiskIcon className="h-8 w-8" />
+             </div>
+             <p className="text-sm font-semibold text-slate-500 uppercase tracking-widest mb-1">Detected Risk Level</p>
+             <h2 className={`text-4xl font-extrabold mb-4 ${riskColor}`}>
+               {result.riskLevel}
+             </h2>
+             <div className="w-full bg-slate-100 rounded-full h-2.5 mb-2">
+                <div 
+                  className={`h-2.5 rounded-full ${isHighRisk ? 'bg-red-500' : isMediumRisk ? 'bg-yellow-500' : 'bg-emerald-500'}`} 
+                  style={{ width: result.confidenceScore }}
+                ></div>
+             </div>
+             <p className="text-xs text-slate-500 font-medium">Model Confidence: {result.confidenceScore}</p>
+          </Card>
+          
+          <Card title="AI Recommendations">
+             <ul className="text-sm text-slate-600 space-y-3 mt-4">
+                {isHighRisk && (
+                  <li className="flex items-start">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 mr-2 flex-shrink-0"></span>
+                    Recommend consultation with a cognitive specialist.
+                  </li>
+                )}
+                <li className="flex items-start">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary-500 mt-1.5 mr-2 flex-shrink-0"></span>
+                  Continue daily reading exercises.
+                </li>
+                <li className="flex items-start">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary-500 mt-1.5 mr-2 flex-shrink-0"></span>
+                  Review performance trends weekly.
+                </li>
+             </ul>
+             <Link to="/dashboard/therapy" className="text-primary-600 hover:text-primary-700 text-sm font-semibold mt-6 inline-block">
+               View Full Therapy Plan &rarr;
+             </Link>
+          </Card>
+        </div>
+
+        {/* Metrics & Transcript */}
+        <div className="md:col-span-2 space-y-6">
+          <div className="grid grid-cols-3 gap-4">
+            <Card className="text-center p-4">
+              <Activity className="h-6 w-6 text-blue-500 mx-auto mb-2" />
+              <p className="text-xs text-slate-500 uppercase font-semibold">Speech Rate</p>
+              <p className="text-2xl font-bold text-slate-800">{result.metrics.wpm}</p>
+              <p className="text-xs text-slate-400">Words / Min</p>
+            </Card>
+            <Card className="text-center p-4">
+              <PauseCircle className="h-6 w-6 text-orange-500 mx-auto mb-2" />
+              <p className="text-xs text-slate-500 uppercase font-semibold">Long Pauses</p>
+              <p className="text-2xl font-bold text-slate-800">{result.metrics.pauseCount}</p>
+              <p className="text-xs text-slate-400">Counts {">"} 2s</p>
+            </Card>
+            <Card className="text-center p-4">
+              <RefreshCcw className="h-6 w-6 text-purple-500 mx-auto mb-2" />
+              <p className="text-xs text-slate-500 uppercase font-semibold">Repetition Rate</p>
+              <p className="text-2xl font-bold text-slate-800">{(parseFloat(result.metrics.repetitionRate)*100).toFixed(0)}%</p>
+              <p className="text-xs text-slate-400">Repeated words</p>
+            </Card>
+          </div>
+
+          <Card title="Speech Analysis Details" className="h-full">
+            <div className="mt-4">
+              <TranscriptDisplay transcript={result.transcript} highlights={result.highlights} />
+            </div>
+            <div className="mt-8 flex justify-end">
+              <Link to="/dashboard/speech" className="btn-primary">
+                Complete Another Task
+              </Link>
+            </div>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+}
