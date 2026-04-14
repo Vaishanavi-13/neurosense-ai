@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Brain, Play, RotateCcw, Check, X } from 'lucide-react';
+import { gameService } from '../../services/gameService';
 
 const WORDS = [
   'APPLE', 'TRAIN', 'HOUSE', 'RIVER', 'BREAD', 
@@ -13,6 +14,7 @@ export default function WordRecall() {
   const [userInput, setUserInput] = useState('');
   const [recalledWords, setRecalledWords] = useState([]);
   const [score, setScore] = useState(0);
+  const [startTime, setStartTime] = useState(null);
 
   const startGame = () => {
     // Select 5 random words
@@ -33,6 +35,7 @@ export default function WordRecall() {
           setCurrentWordIndex(prev => prev + 1);
         } else {
           setGameState('typing');
+          setStartTime(Date.now());
         }
       }, 2000); // Show each word for 2 seconds
     }
@@ -62,6 +65,10 @@ export default function WordRecall() {
       if (wordsToShow.includes(w)) correct++;
     });
     setScore(correct);
+    
+    // Save metric
+    const timeTaken = Date.now() - startTime;
+    gameService.saveGameSession('Word Recall', correct * 20, timeTaken);
   };
 
   return (

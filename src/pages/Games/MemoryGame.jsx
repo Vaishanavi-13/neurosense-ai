@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Card from '../../components/Card';
 import { Gamepad2, Play, RotateCcw } from 'lucide-react';
+import { gameService } from '../../services/gameService';
 
 const INITIAL_CARDS = ['🧠', '🧬', '💊', '🩺', '🔬', '🏥', '🚑', '👨‍⚕️'];
 
@@ -11,6 +12,7 @@ export default function MemoryGame() {
   const [moves, setMoves] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [won, setWon] = useState(false);
+  const [startTime, setStartTime] = useState(null);
   
   const generateCards = () => {
     const duplicated = [...INITIAL_CARDS, ...INITIAL_CARDS];
@@ -24,6 +26,7 @@ export default function MemoryGame() {
     setMoves(0);
     setIsPlaying(true);
     setWon(false);
+    setStartTime(Date.now());
   };
 
   useEffect(() => {
@@ -40,11 +43,15 @@ export default function MemoryGame() {
   }, [flipped, cards]);
 
   useEffect(() => {
-    if (solved.length === INITIAL_CARDS.length * 2 && solved.length > 0) {
+    if (solved.length === INITIAL_CARDS.length * 2 && solved.length > 0 && !won) {
       setWon(true);
       setIsPlaying(false);
+      
+      const timeTakenMs = Date.now() - startTime;
+      const finalScore = Math.max(100 - (moves * 2), 10); // Simple scoring algorithm
+      gameService.saveGameSession('Memory Match', finalScore, timeTakenMs);
     }
-  }, [solved]);
+  }, [solved, won, moves, startTime]);
 
   const handleCardClick = (index) => {
     if (!isPlaying || flipped.length === 2 || flipped.includes(index) || solved.includes(index)) return;

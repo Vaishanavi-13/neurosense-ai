@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Clock, Play, RotateCcw } from 'lucide-react';
+import { gameService } from '../../services/gameService';
 
 export default function ReactionGame() {
   const [gameState, setGameState] = useState('idle'); // idle, waiting, playing, finished
@@ -39,6 +40,10 @@ export default function ReactionGame() {
       setGameState('finished');
       setMessage(`Your reaction time: ${time} ms`);
       setBgColor('bg-blue-50');
+      
+      // Save result (lower reaction time = higher score, max 100)
+      const score = Math.max(100 - Math.floor(time / 10), 0);
+      gameService.saveGameSession('Reaction Time', score, time);
     }
   };
 

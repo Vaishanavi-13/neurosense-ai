@@ -9,6 +9,7 @@ import Landing from './pages/Landing/Landing';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
 import Dashboard from './pages/Dashboard/Dashboard';
+import GamesIndex from './pages/Games/Games';
 import MemoryGame from './pages/Games/MemoryGame';
 import ReactionGame from './pages/Games/ReactionGame';
 import WordRecall from './pages/Games/WordRecall';
@@ -55,6 +56,7 @@ export default function App() {
             <AuthLayout>
               <Routes>
                 <Route index element={<Dashboard />} />
+                <Route path="games" element={<GamesIndex />} />
                 <Route path="games/memory" element={<MemoryGame />} />
                 <Route path="games/reaction" element={<ReactionGame />} />
                 <Route path="games/recall" element={<WordRecall />} />
