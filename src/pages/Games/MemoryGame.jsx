@@ -63,13 +63,13 @@ export default function MemoryGame() {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-8rem)] max-w-3xl mx-auto overflow-hidden">
-      <div className="flex flex-col sm:flex-row justify-between items-center bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex-shrink-0 mb-4 z-10">
+    <div className="flex flex-col h-[calc(100vh-8rem)] max-w-3xl mx-auto overflow-hidden animate-in fade-in duration-500">
+      <div className="flex flex-col sm:flex-row justify-between items-center bg-white dark:bg-slate-900 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 flex-shrink-0 mb-4 z-10 transition-colors duration-200">
         <div>
-          <h2 className="text-xl font-bold flex items-center text-slate-800">
-            <Gamepad2 className="mr-2 h-6 w-6 text-primary-600" /> Memory Match
+          <h2 className="text-xl font-bold flex items-center text-slate-800 dark:text-white">
+            <Gamepad2 className="mr-2 h-6 w-6 text-primary-600 dark:text-primary-400" /> Memory Match
           </h2>
-          <p className="text-sm text-slate-500 hidden sm:block">Find all the matching pairs</p>
+          <p className="text-sm text-muted hidden sm:block">Find all the matching pairs</p>
         </div>
         
         <div className="flex items-center space-x-4 mt-2 sm:mt-0">
@@ -77,7 +77,7 @@ export default function MemoryGame() {
             <select 
               value={gridSize} 
               onChange={(e) => setGridSize(e.target.value)}
-              className="px-3 py-1.5 border border-slate-300 rounded-lg text-sm text-slate-700 outline-none focus:ring-2 focus:ring-primary-500"
+              className="px-3 py-1.5 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-lg text-sm text-slate-700 dark:text-slate-200 outline-none focus:ring-2 focus:ring-primary-500 transition-all"
             >
               <option value="small">Small (4x3)</option>
               <option value="large">Large (4x4)</option>
@@ -86,8 +86,8 @@ export default function MemoryGame() {
 
           {isPlaying && (
             <div className="text-right">
-              <p className="text-xs text-slate-500 font-medium">MOVES</p>
-              <p className="text-xl font-bold text-slate-800 leading-none">{moves}</p>
+              <p className="text-xs text-muted font-medium">MOVES</p>
+              <p className="text-xl font-bold text-slate-800 dark:text-white leading-none">{moves}</p>
             </div>
           )}
 
@@ -103,20 +103,20 @@ export default function MemoryGame() {
 
       <div className="flex-1 min-h-0 flex items-center justify-center relative">
         {!isPlaying && !won && (
-           <div className="w-full h-full max-h-72 flex flex-col items-center justify-center bg-slate-100 rounded-2xl border-2 border-dashed border-slate-300 p-6 text-center">
-              <Gamepad2 className="h-12 w-12 text-slate-300 mb-3" />
-              <h3 className="text-xl font-bold text-slate-700">Test your memory</h3>
-              <p className="text-slate-500 mt-2 text-sm max-w-sm">
+           <div className="w-full h-full max-h-72 flex flex-col items-center justify-center bg-slate-50 dark:bg-slate-900 border-2 border-dashed border-slate-200 dark:border-slate-800 p-6 text-center rounded-2xl transition-colors">
+              <Gamepad2 className="h-12 w-12 text-slate-300 dark:text-slate-700 mb-3" />
+              <h3 className="text-xl font-bold text-slate-700 dark:text-slate-200">Test your memory</h3>
+              <p className="text-muted mt-2 text-sm max-w-sm">
                 Select your grid size and find matches with the fewest moves possible.
               </p>
            </div>
         )}
 
         {won && (
-           <div className="w-full h-full max-h-72 flex flex-col items-center justify-center bg-emerald-50 rounded-2xl border-2 border-emerald-200 p-6 text-center">
-              <h3 className="text-2xl font-bold text-emerald-700 mb-2">Excellent Work!</h3>
-              <p className="text-emerald-600">Completed in {moves} moves.</p>
-              <p className="text-emerald-500 text-sm mt-1">Score saved to profile.</p>
+           <div className="w-full h-full max-h-72 flex flex-col items-center justify-center bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl border-2 border-emerald-100 dark:border-emerald-900/30 p-6 text-center transition-colors">
+              <h3 className="text-2xl font-bold text-emerald-700 dark:text-emerald-400 mb-2">Excellent Work!</h3>
+              <p className="text-emerald-600 dark:text-emerald-300">Completed in {moves} moves.</p>
+              <p className="text-emerald-500 dark:text-emerald-500/70 text-sm mt-1">Score saved to profile.</p>
            </div>
         )}
 
@@ -132,7 +132,7 @@ export default function MemoryGame() {
                   onClick={() => handleCardClick(index)}
                   className={`
                     cursor-pointer transition-all duration-300 transform perspective-1000 w-full h-full min-h-0
-                    ${isFlipped ? 'rotate-y-180 bg-white shadow-md border border-slate-200' : 'bg-primary-500 hover:bg-primary-600 shadow-sm rounded-xl'} 
+                    ${isFlipped ? 'rotate-y-180 bg-white dark:bg-slate-800 shadow-md border border-slate-200 dark:border-slate-700' : 'bg-primary-500 hover:bg-primary-600 shadow-sm rounded-xl'} 
                     flex items-center justify-center text-3xl sm:text-4xl rounded-xl
                   `}
                 >

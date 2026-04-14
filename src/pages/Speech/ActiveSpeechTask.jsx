@@ -20,8 +20,8 @@ const getTaskContent = (taskId) => {
         title: 'Picture Description',
         instructions: 'Please look at the image below and describe everything you see happening. Try to speak for at least 30 seconds.',
         media: (
-          <div className="w-full h-64 bg-slate-200 rounded-xl flex items-center justify-center overflow-hidden border border-slate-300">
-             <div className="text-center text-slate-500">
+          <div className="w-full h-64 bg-slate-200 dark:bg-slate-800 rounded-xl flex items-center justify-center overflow-hidden border border-slate-300 dark:border-slate-700 transition-colors">
+             <div className="text-center text-slate-500 dark:text-slate-400">
                <span className="block text-4xl mb-2">🖼️</span>
                <p className="font-medium">Cookie Theft Picture</p>
                <p className="text-xs mt-1">(Standard cognitive assessment image)</p>
@@ -34,8 +34,8 @@ const getTaskContent = (taskId) => {
         title: 'Reading Task',
         instructions: 'Please read the following passage aloud in your normal speaking voice.',
         media: (
-          <div className="p-6 bg-yellow-50 border border-yellow-200 rounded-xl">
-             <p className="text-xl font-serif text-slate-800 leading-relaxed italic">
+          <div className="p-6 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-900/30 rounded-xl transition-colors">
+             <p className="text-xl font-serif text-slate-800 dark:text-slate-200 leading-relaxed italic">
                "The sun was shining brightly as the children ran out to play. 
                 They took their favorite ball and hurried across the green grass. 
                 Suddenly, a small dog appeared from behind the bushes, wagging its tail eagerly."
@@ -108,24 +108,24 @@ export default function ActiveSpeechTask() {
       <div className="max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
         <button 
           onClick={() => navigate('/dashboard/speech')}
-          className="flex items-center text-slate-500 hover:text-primary-600 transition-colors mb-6 font-medium"
+          className="flex items-center text-slate-500 hover:text-primary-600 dark:hover:text-primary-400 transition-colors mb-6 font-medium"
         >
           <ArrowLeft className="h-4 w-4 mr-2" /> Back to Tasks
         </button>
 
         <Card className="mb-8 border-t-4 border-t-primary-500">
-          <h2 className="text-3xl font-bold text-slate-800 mb-2">Question Answer</h2>
-          <p className="text-lg text-slate-600 mb-6 pb-6 border-b border-slate-100">
+          <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-2">Question Answer</h2>
+          <p className="text-lg text-muted mb-6 pb-6 border-b border-slate-100 dark:border-slate-800 transition-colors">
             Listen to or read the questions sequentially. Record your answer for each.
           </p>
 
           {isCompleted ? (
             <div className="text-center py-10 animate-in fade-in zoom-in-95 duration-300">
-              <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <CheckCircle className="h-10 w-10 text-emerald-600" />
+              <div className="w-20 h-20 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mx-auto mb-6 transition-colors">
+                <CheckCircle className="h-10 w-10 text-emerald-600 dark:text-emerald-400" />
               </div>
-              <h3 className="text-2xl font-bold text-emerald-600 mb-4">Task Completed!</h3>
-              <p className="text-slate-600 mb-8 max-w-sm mx-auto">
+              <h3 className="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mb-4 transition-colors">Task Completed!</h3>
+              <p className="text-muted mb-8 max-w-sm mx-auto">
                 You have successfully recorded answers for all {qaQuestions.length} questions. You're ready to submit.
               </p>
               <button 
@@ -138,24 +138,24 @@ export default function ActiveSpeechTask() {
             </div>
           ) : (
             <div className="animate-in fade-in duration-300 relative">
-              <div className="mb-4 flex items-center justify-between font-semibold text-slate-500 uppercase tracking-widest text-xs">
+              <div className="mb-4 flex items-center justify-between font-semibold text-muted uppercase tracking-widest text-xs transition-colors">
                 <span>Question {currentQIndex + 1} of {qaQuestions.length}</span>
                 <div className="flex space-x-1">
                   {qaQuestions.map((_, i) => (
-                    <div key={i} className={`h-2 w-8 rounded-full ${i <= currentQIndex ? 'bg-primary-500' : 'bg-slate-200'}`} />
+                    <div key={i} className={`h-2 w-8 rounded-full transition-all duration-300 ${i <= currentQIndex ? 'bg-primary-500' : 'bg-slate-200 dark:bg-slate-800'}`} />
                   ))}
                 </div>
               </div>
               
-              <div className="p-8 md:p-12 bg-blue-50 border border-blue-200 rounded-xl text-center mb-8 shadow-sm">
-                 <p className="text-2xl md:text-3xl font-bold text-blue-900 mb-4 leading-tight">
+              <div className="p-8 md:p-12 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-900/30 rounded-xl text-center mb-8 shadow-sm transition-colors">
+                 <p className="text-2xl md:text-3xl font-bold text-blue-900 dark:text-blue-300 mb-4 leading-tight">
                    "{currentQ}"
                  </p>
-                 <p className="text-blue-700">Please provide as many details as possible.</p>
+                 <p className="text-blue-700 dark:text-blue-400">Please provide as many details as possible.</p>
               </div>
 
               {/* Recorder */}
-              <div key={`recorder-${currentQIndex}`} className="bg-slate-50 rounded-2xl p-2 mb-8">
+              <div key={`recorder-${currentQIndex}`} className="bg-slate-50 dark:bg-slate-800/20 rounded-2xl p-2 mb-8 transition-colors">
                  <VoiceRecorder 
                    onRecordingComplete={handleRecordingComplete} 
                    isProcessing={isProcessing} 
@@ -164,11 +164,11 @@ export default function ActiveSpeechTask() {
               </div>
 
               {/* Navigation */}
-              <div className="flex justify-between items-center border-t border-slate-100 pt-6">
+              <div className="flex justify-between items-center border-t border-slate-100 dark:border-slate-800 pt-6 transition-colors">
                 <button 
                   onClick={() => setCurrentQIndex((prev) => Math.max(0, prev - 1))}
                   disabled={currentQIndex === 0}
-                  className="flex items-center px-5 py-2.5 text-slate-600 hover:bg-slate-100 rounded-lg disabled:opacity-30 font-medium transition-colors"
+                  className="flex items-center px-5 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg disabled:opacity-30 font-medium transition-colors"
                 >
                   <ChevronLeft className="h-5 w-5 mr-1" /> Previous
                 </button>
@@ -197,22 +197,22 @@ export default function ActiveSpeechTask() {
     <div className="max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
       <button 
         onClick={() => navigate('/dashboard/speech')}
-        className="flex items-center text-slate-500 hover:text-primary-600 transition-colors mb-6 font-medium"
+        className="flex items-center text-slate-500 hover:text-primary-600 dark:hover:text-primary-400 transition-colors mb-6 font-medium transition-colors"
       >
         <ArrowLeft className="h-4 w-4 mr-2" /> Back to Tasks
       </button>
 
       <Card className="mb-8 border-t-4 border-t-primary-500">
-        <h2 className="text-3xl font-bold text-slate-800 mb-2">{content.title}</h2>
-        <p className="text-lg text-slate-600 mb-6 pb-6 border-b border-slate-100">
+        <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-2 transition-colors">{content.title}</h2>
+        <p className="text-lg text-muted mb-6 pb-6 border-b border-slate-100 dark:border-slate-800 transition-colors">
           {content.instructions}
         </p>
 
-        <div className="mb-8">
+        <div className="mb-8 overflow-hidden rounded-xl">
           {content.media}
         </div>
 
-        <div className="bg-slate-50 rounded-2xl p-2 rounded-2xl">
+        <div className="bg-slate-50 dark:bg-slate-800/20 rounded-2xl p-2 transition-colors">
            <VoiceRecorder 
              onRecordingComplete={handleRecordingComplete} 
              isProcessing={isProcessing} 
@@ -220,7 +220,7 @@ export default function ActiveSpeechTask() {
         </div>
 
         {audioBlob && !isProcessing && (
-          <div className="mt-8 flex justify-center animate-in fade-in">
+          <div className="mt-8 flex justify-center animate-in fade-in transition-all">
              <button 
                onClick={handleSubmit}
                className="btn-primary text-lg px-10 py-4 flex items-center shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all"

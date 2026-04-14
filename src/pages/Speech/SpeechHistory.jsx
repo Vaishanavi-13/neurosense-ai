@@ -26,28 +26,28 @@ export default function SpeechHistory() {
   });
 
   return (
-    <div className="max-w-6xl mx-auto space-y-6">
+    <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
       <div className="flex items-center justify-between">
          <button 
           onClick={() => navigate('/dashboard/speech')}
-          className="flex items-center text-slate-500 hover:text-primary-600 transition-colors font-medium"
+          className="flex items-center text-slate-500 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors font-medium"
         >
           <ArrowLeft className="h-4 w-4 mr-2" /> Back to Tasks
         </button>
       </div>
 
       <div>
-        <h1 className="text-3xl font-extrabold text-slate-800">Vocal Biomarker History</h1>
-        <p className="text-slate-600 mt-2">Track the progression of your speech metrics over time.</p>
+        <h1 className="text-3xl font-extrabold text-slate-800 dark:text-white transition-colors">Vocal Biomarker History</h1>
+        <p className="text-muted mt-2">Track the progression of your speech metrics over time.</p>
       </div>
 
       {!hasData ? (
         <Card className="text-center py-16 px-4">
-          <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Clock className="w-10 h-10 text-slate-400" />
+          <div className="w-20 h-20 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-6 transition-colors">
+            <Clock className="w-10 h-10 text-slate-400 dark:text-slate-500" />
           </div>
-          <h3 className="text-xl font-bold text-slate-700 mb-2">No History Available</h3>
-          <p className="text-slate-500 mb-6 max-w-md mx-auto">You haven't completed any speech tasks yet. Start a task to generate your first baseline assessment.</p>
+          <h3 className="text-xl font-bold text-slate-700 dark:text-slate-200 mb-2">No History Available</h3>
+          <p className="text-muted mb-6 max-w-md mx-auto">You haven't completed any speech tasks yet. Start a task to generate your first baseline assessment.</p>
           <Link to="/dashboard/speech" className="btn-primary">Start First Task</Link>
         </Card>
       ) : (
@@ -70,33 +70,33 @@ export default function SpeechHistory() {
              <div className="overflow-x-auto mt-4">
                <table className="w-full text-left border-collapse">
                  <thead>
-                   <tr className="border-b border-slate-200">
-                     <th className="py-3 px-4 text-sm font-semibold text-slate-600">Date</th>
-                     <th className="py-3 px-4 text-sm font-semibold text-slate-600">Task Type</th>
-                     <th className="py-3 px-4 text-sm font-semibold text-slate-600">Risk Level</th>
-                     <th className="py-3 px-4 text-sm font-semibold text-slate-600">Analysis</th>
+                   <tr className="border-b border-slate-200 dark:border-slate-800 transition-colors">
+                     <th className="py-3 px-4 text-sm font-semibold text-slate-600 dark:text-slate-400">Date</th>
+                     <th className="py-3 px-4 text-sm font-semibold text-slate-600 dark:text-slate-400">Task Type</th>
+                     <th className="py-3 px-4 text-sm font-semibold text-slate-600 dark:text-slate-400">Risk Level</th>
+                     <th className="py-3 px-4 text-sm font-semibold text-slate-600 dark:text-slate-400">Analysis</th>
                    </tr>
                  </thead>
                  <tbody>
                    {history.slice().reverse().map((item) => (
-                     <tr key={item.id} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
-                       <td className="py-3 px-4 text-sm text-slate-700 whitespace-nowrap">
+                     <tr key={item.id} className="border-b border-slate-100 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                       <td className="py-3 px-4 text-sm text-slate-700 dark:text-slate-300 whitespace-nowrap">
                          {new Date(item.date).toLocaleDateString()}
                        </td>
-                       <td className="py-3 px-4 text-sm text-slate-700 capitalize">
+                       <td className="py-3 px-4 text-sm text-slate-700 dark:text-slate-300 capitalize">
                          {item.taskType.replace('-', ' ')}
                        </td>
                        <td className="py-3 px-4">
-                         <span className={`px-3 py-1 rounded-full text-xs font-bold ${
-                            item.riskLevel === 'High' ? 'bg-red-100 text-red-700' :
-                            item.riskLevel === 'Medium' ? 'bg-yellow-100 text-yellow-700' :
-                            'bg-emerald-100 text-emerald-700'
+                         <span className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
+                            item.riskLevel === 'High' ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400' :
+                            item.riskLevel === 'Medium' ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400' :
+                            'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400'
                          }`}>
                            {item.riskLevel}
                          </span>
                        </td>
                        <td className="py-3 px-4">
-                         <Link to={`/dashboard/speech/result/${item.id}`} className="text-primary-600 hover:text-primary-800 text-sm font-medium">
+                         <Link to={`/dashboard/speech/result/${item.id}`} className="text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 text-sm font-medium transition-colors">
                            View Details
                          </Link>
                        </td>

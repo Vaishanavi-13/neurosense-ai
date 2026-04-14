@@ -84,22 +84,22 @@ export default function VoiceRecorder({ onRecordingComplete, isProcessing, initi
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-6 bg-slate-50 border border-slate-200 rounded-2xl shadow-sm">
+    <div className="flex flex-col items-center justify-center p-6 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm transition-colors duration-200">
       <div className="mb-6 flex flex-col items-center">
         {isRecording ? (
           <div className="relative flex items-center justify-center">
             <div className="absolute w-24 h-24 bg-red-500 rounded-full animate-ping opacity-20"></div>
-            <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center z-10 border border-red-200">
+            <div className="w-20 h-20 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center z-10 border border-red-200 dark:border-red-900/30">
               <Mic className="text-red-500 h-8 w-8 animate-pulse" />
             </div>
           </div>
         ) : (
-          <div className="w-20 h-20 bg-primary-100 rounded-full flex items-center justify-center">
-            <Mic className="text-primary-600 h-8 w-8" />
+          <div className="w-20 h-20 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center transition-colors">
+            <Mic className="text-primary-600 dark:text-primary-400 h-8 w-8" />
           </div>
         )}
         
-        <div className="mt-4 text-2xl font-mono text-slate-700 font-semibold">
+        <div className="mt-4 text-2xl font-mono text-slate-700 dark:text-slate-100 font-semibold transition-colors">
           {formatTime(recordingTime)}
         </div>
       </div>
@@ -129,7 +129,7 @@ export default function VoiceRecorder({ onRecordingComplete, isProcessing, initi
             <button
               onClick={resetRecording}
               disabled={isProcessing}
-              className="flex items-center justify-center px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg font-medium transition-colors disabled:opacity-50"
+              className="flex items-center justify-center px-4 py-2 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-lg font-medium transition-colors disabled:opacity-50"
             >
               <RotateCcw className="h-4 w-4 mr-2" /> Retry
             </button>
@@ -138,7 +138,7 @@ export default function VoiceRecorder({ onRecordingComplete, isProcessing, initi
       </div>
       
       {isProcessing && (
-        <div className="mt-6 flex items-center text-primary-600 font-medium">
+        <div className="mt-6 flex items-center text-primary-600 dark:text-primary-400 font-medium">
           <Loader2 className="h-5 w-5 mr-2 animate-spin" />
           Analyzing Speech Patterns...
         </div>

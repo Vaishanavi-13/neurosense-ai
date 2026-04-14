@@ -27,8 +27,8 @@ export default function SpeechResult() {
 
   const isHighRisk = result.riskLevel === 'High';
   const isMediumRisk = result.riskLevel === 'Medium';
-  const riskColor = isHighRisk ? 'text-red-600' : isMediumRisk ? 'text-yellow-600' : 'text-emerald-600';
-  const riskBg = isHighRisk ? 'bg-red-50' : isMediumRisk ? 'bg-yellow-50' : 'bg-emerald-50';
+  const riskColor = isHighRisk ? 'text-red-600 dark:text-red-400' : isMediumRisk ? 'text-yellow-600 dark:text-yellow-400' : 'text-emerald-600 dark:text-emerald-400';
+  const riskBg = isHighRisk ? 'bg-red-50 dark:bg-red-900/20' : isMediumRisk ? 'bg-yellow-50 dark:bg-yellow-900/20' : 'bg-emerald-50 dark:bg-emerald-900/20';
   const RiskIcon = isHighRisk ? AlertTriangle : isMediumRisk ? ShieldAlert : CheckCircle;
 
   return (
@@ -36,11 +36,11 @@ export default function SpeechResult() {
       <div className="flex items-center justify-between">
          <button 
           onClick={() => navigate('/dashboard/speech')}
-          className="flex items-center text-slate-500 hover:text-primary-600 transition-colors font-medium"
+          className="flex items-center text-slate-500 hover:text-primary-600 dark:hover:text-primary-400 transition-colors font-medium"
         >
           <ArrowLeft className="h-4 w-4 mr-2" /> Back to Tasks
         </button>
-        <span className="text-sm font-medium text-slate-400">
+        <span className="text-sm font-medium text-slate-400 dark:text-slate-500">
           Result ID: {result.id.slice(0, 8)} | Date: {new Date(result.date).toLocaleDateString()}
         </span>
       </div>
@@ -48,25 +48,25 @@ export default function SpeechResult() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Risk Assessment Summary */}
         <div className="md:col-span-1 space-y-6">
-          <Card className={`text-center border-t-4 ${isHighRisk ? 'border-t-red-500' : isMediumRisk ? 'border-t-yellow-500' : 'border-t-emerald-500'}`}>
-             <div className={`mx-auto w-16 h-16 rounded-full ${riskBg} ${riskColor} flex items-center justify-center mb-4`}>
+          <Card className={`text-center border-t-4 transition-colors ${isHighRisk ? 'border-t-red-500' : isMediumRisk ? 'border-t-yellow-500' : 'border-t-emerald-500'}`}>
+             <div className={`mx-auto w-16 h-16 rounded-full transition-colors ${riskBg} ${riskColor} flex items-center justify-center mb-4`}>
                <RiskIcon className="h-8 w-8" />
              </div>
-             <p className="text-sm font-semibold text-slate-500 uppercase tracking-widest mb-1">Detected Risk Level</p>
-             <h2 className={`text-4xl font-extrabold mb-4 ${riskColor}`}>
+             <p className="text-sm font-semibold text-muted uppercase tracking-widest mb-1">Detected Risk Level</p>
+             <h2 className={`text-4xl font-extrabold mb-4 transition-colors ${riskColor}`}>
                {result.riskLevel}
              </h2>
-             <div className="w-full bg-slate-100 rounded-full h-2.5 mb-2">
+             <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2.5 mb-2 transition-colors">
                 <div 
-                  className={`h-2.5 rounded-full ${isHighRisk ? 'bg-red-500' : isMediumRisk ? 'bg-yellow-500' : 'bg-emerald-500'}`} 
+                  className={`h-2.5 rounded-full transition-all duration-1000 ${isHighRisk ? 'bg-red-500' : isMediumRisk ? 'bg-yellow-500' : 'bg-emerald-500'}`} 
                   style={{ width: result.confidenceScore }}
                 ></div>
              </div>
-             <p className="text-xs text-slate-500 font-medium">Model Confidence: {result.confidenceScore}</p>
+             <p className="text-xs text-muted font-medium">Model Confidence: {result.confidenceScore}</p>
           </Card>
           
           <Card title="AI Recommendations">
-             <ul className="text-sm text-slate-600 space-y-3 mt-4">
+             <ul className="text-sm text-slate-600 dark:text-slate-300 space-y-3 mt-4 transition-colors">
                 {isHighRisk && (
                   <li className="flex items-start">
                     <span className="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 mr-2 flex-shrink-0"></span>
@@ -82,7 +82,7 @@ export default function SpeechResult() {
                   Review performance trends weekly.
                 </li>
              </ul>
-             <Link to="/dashboard/therapy" className="text-primary-600 hover:text-primary-700 text-sm font-semibold mt-6 inline-block">
+             <Link to="/dashboard/therapy" className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 text-sm font-semibold mt-6 inline-block transition-colors">
                View Full Therapy Plan &rarr;
              </Link>
           </Card>
@@ -92,22 +92,22 @@ export default function SpeechResult() {
         <div className="md:col-span-2 space-y-6">
           <div className="grid grid-cols-3 gap-4">
             <Card className="text-center p-4">
-              <Activity className="h-6 w-6 text-blue-500 mx-auto mb-2" />
-              <p className="text-xs text-slate-500 uppercase font-semibold">Speech Rate</p>
-              <p className="text-2xl font-bold text-slate-800">{result.metrics.wpm}</p>
-              <p className="text-xs text-slate-400">Words / Min</p>
+              <Activity className="h-6 w-6 text-blue-500 dark:text-blue-400 mx-auto mb-2" />
+              <p className="text-xs text-muted uppercase font-semibold">Speech Rate</p>
+              <p className="text-2xl font-bold text-slate-800 dark:text-white transition-colors">{result.metrics.wpm}</p>
+              <p className="text-xs text-slate-400 dark:text-slate-600">Words / Min</p>
             </Card>
             <Card className="text-center p-4">
-              <PauseCircle className="h-6 w-6 text-orange-500 mx-auto mb-2" />
-              <p className="text-xs text-slate-500 uppercase font-semibold">Long Pauses</p>
-              <p className="text-2xl font-bold text-slate-800">{result.metrics.pauseCount}</p>
-              <p className="text-xs text-slate-400">Counts {">"} 2s</p>
+              <PauseCircle className="h-6 w-6 text-orange-500 dark:text-orange-400 mx-auto mb-2" />
+              <p className="text-xs text-muted uppercase font-semibold">Long Pauses</p>
+              <p className="text-2xl font-bold text-slate-800 dark:text-white transition-colors">{result.metrics.pauseCount}</p>
+              <p className="text-xs text-slate-400 dark:text-slate-600">Counts {">"} 2s</p>
             </Card>
             <Card className="text-center p-4">
-              <RefreshCcw className="h-6 w-6 text-purple-500 mx-auto mb-2" />
-              <p className="text-xs text-slate-500 uppercase font-semibold">Repetition Rate</p>
-              <p className="text-2xl font-bold text-slate-800">{(parseFloat(result.metrics.repetitionRate)*100).toFixed(0)}%</p>
-              <p className="text-xs text-slate-400">Repeated words</p>
+              <RefreshCcw className="h-6 w-6 text-purple-500 dark:text-purple-400 mx-auto mb-2" />
+              <p className="text-xs text-muted uppercase font-semibold">Repetition Rate</p>
+              <p className="text-2xl font-bold text-slate-800 dark:text-white transition-colors">{(parseFloat(result.metrics.repetitionRate)*100).toFixed(0)}%</p>
+              <p className="text-xs text-slate-400 dark:text-slate-600">Repeated words</p>
             </Card>
           </div>
 

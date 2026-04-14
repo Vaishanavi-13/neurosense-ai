@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import { useApp } from '../hooks/useApp';
 import { 
   LayoutDashboard, 
   Gamepad2, 
@@ -13,23 +14,24 @@ import {
   Mic
 } from 'lucide-react';
 
-const navItems = [
-  { name: 'Overview', path: '/dashboard', icon: LayoutDashboard, exact: true },
-  { name: 'Cognitive Games', path: '/dashboard/games', icon: Gamepad2 },
-  { name: 'Speech Analysis', path: '/dashboard/speech', icon: Mic },
-  { name: 'Progress', path: '/dashboard/progress', icon: TrendingUp },
-  { name: 'Risk Assessment', path: '/dashboard/risk', icon: ShieldAlert },
-  { name: 'Therapy', path: '/dashboard/therapy', icon: HeartHandshake },
-  { name: 'Profile', path: '/dashboard/profile', icon: UserCircle },
-];
-
 export default function Sidebar() {
   const { logout } = useAuth();
+  const { t } = useApp();
+
+  const navItems = [
+    { name: t.overview, path: '/dashboard', icon: LayoutDashboard, exact: true },
+    { name: t.games, path: '/dashboard/games', icon: Gamepad2 },
+    { name: t.speech, path: '/dashboard/speech', icon: Mic },
+    { name: t.progress, path: '/dashboard/progress', icon: TrendingUp },
+    { name: t.risk_assessment, path: '/dashboard/risk', icon: ShieldAlert },
+    { name: t.therapy, path: '/dashboard/therapy', icon: HeartHandshake },
+    { name: t.profile, path: '/dashboard/profile', icon: UserCircle },
+  ];
 
   return (
-    <div className="w-64 bg-white border-r border-slate-200 hidden md:flex flex-col">
-      <div className="h-16 flex items-center px-6 border-b border-slate-200">
-        <BrainCircuit className="h-8 w-8 text-primary-600 mr-3" />
+    <div className="w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 hidden md:flex flex-col transition-colors duration-200">
+      <div className="h-16 flex items-center px-6 border-b border-slate-200 dark:border-slate-800 transition-colors">
+        <BrainCircuit className="h-8 w-8 text-primary-600 dark:text-primary-400 mr-3" />
         <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-secondary-500">
           NeuroSense
         </span>
@@ -44,8 +46,8 @@ export default function Sidebar() {
             className={({ isActive }) => 
               `flex items-center px-3 py-2.5 rounded-lg transition-colors duration-200 font-medium ${
                 isActive 
-                  ? 'bg-primary-50 text-primary-700' 
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                  ? 'bg-primary-50 dark:bg-primary-900/40 text-primary-700 dark:text-primary-200' 
+                  : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-slate-100'
               }`
             }
           >
@@ -55,13 +57,13 @@ export default function Sidebar() {
         ))}
       </div>
 
-      <div className="p-4 border-t border-slate-200">
+      <div className="p-4 border-t border-slate-200 dark:border-slate-800 transition-colors">
         <button 
           onClick={logout}
-          className="flex items-center w-full px-3 py-2.5 rounded-lg text-slate-600 hover:bg-red-50 hover:text-red-600 transition-colors duration-200 font-medium"
+          className="flex items-center w-full px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-red-50 dark:hover:bg-red-900/30 hover:text-red-600 dark:hover:text-red-400 transition-colors duration-200 font-medium"
         >
           <LogOut className="h-5 w-5 mr-3" />
-          Logout
+          {t.logout}
         </button>
       </div>
     </div>
