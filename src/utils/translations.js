@@ -278,6 +278,22 @@ export const translations = {
     sign_in: "Sign In",
     no_account: "Don't have an account?",
     register_here: "Register here",
+    
+    // Landing
+    hero_title: "AI-Powered Cognitive Health Platform",
+    hero_subtitle: "Proactively monitor, assess, and improve your cognitive resilience using vocal biomarkers and clinical-grade games.",
+    get_started: "Get Started",
+    login: "Log In",
+    start_assessment: "Start Assessment",
+    learn_more: "Learn More",
+    features_title: "Key Features",
+    features_subtitle: "Comprehensive tools for cognitive health tracking",
+    feature_ai_title: "AI Risk Analysis",
+    feature_ai_desc: "Advanced vocal biomarker analysis to detect early signs of cognitive decline.",
+    feature_games_title: "Cognitive Games",
+    feature_games_desc: "Scientifically designed games to test and improve memory and recall.",
+    feature_tracking_title: "Progress Tracking",
+    feature_tracking_desc: "Detailed longitudinal tracking to monitor your performance over time.",
   },
   mr: {
     // Navbar
@@ -558,5 +574,21 @@ export const translations = {
     sign_in: "साइन इन करा",
     no_account: "खाते नाही?",
     register_here: "येथे नोंदणी करा",
+
+    // Landing
+    hero_title: "एआय-चालित संज्ञानात्मक आरोग्य प्लॅटफॉर्म",
+    hero_subtitle: "व्होकल बायोमार्कर आणि क्लिनिकल-ग्रेड गेम वापरून तुमच्या संज्ञानात्मक लवचिकतेचे निरीक्षण करा, मूल्यांकन करा आणि सुधारणा करा.",
+    get_started: "सुरू करा",
+    login: "लॉग इन करा",
+    start_assessment: "मूल्यांकन सुरू करा",
+    learn_more: "अधिक जाणून घ्या",
+    features_title: "महत्त्वाची वैशिष्ट्ये",
+    features_subtitle: "संज्ञानात्मक आरोग्य ट्रॅकिंगसाठी सर्वसमावेशक साधने",
+    feature_ai_title: "एआय जोखीम विश्लेषण",
+    feature_ai_desc: "संज्ञानात्मक ऱ्हासाची सुरुवातीची चिन्हे शोधण्यासाठी प्रगत व्होकल बायोमार्कर विश्लेषण.",
+    feature_games_title: "संज्ञानात्मक खेळ",
+    feature_games_desc: "स्मरणशक्ती तपासण्यासाठी आणि सुधारण्यासाठी वैज्ञानिकदृष्ट्या डिझाइन केलेले खेळ.",
+    feature_tracking_title: "प्रगती ट्रॅकिंग",
+    feature_tracking_desc: "कालांतराने तुमच्या कामगिरीचे निरीक्षण करण्यासाठी तपशीलवार प्रगती ट्रॅकिंग.",
   }
 };
