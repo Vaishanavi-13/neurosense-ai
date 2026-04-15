@@ -57,7 +57,7 @@ export default function Games() {
           <p className="text-slate-600 dark:text-slate-400 flex-1">
             {t.image_recall_desc}
           </p>
-          <Link to="/dashboard/games/image-recall" className="bg-orange-500 text-white hover:bg-orange-600 dark:hover:bg-orange-700 px-4 py-2 rounded-lg transition-colors font-medium shadow-sm mt-6 w-full flex items-center justify-center active:scale-95">
+          <Link to="/dashboard/games/image-recall" className="btn-primary mt-6 group-hover:bg-primary-700 w-full flex items-center justify-center">
             {t.play_now} <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
         </Card>
@@ -70,7 +70,7 @@ export default function Games() {
           <p className="text-slate-600 dark:text-slate-400 flex-1">
             {t.word_recall_desc}
           </p>
-          <Link to="/dashboard/games/recall" className="bg-purple-600 text-white hover:bg-purple-700 dark:hover:bg-purple-800 px-4 py-2 rounded-lg transition-colors font-medium shadow-sm mt-6 w-full flex items-center justify-center active:scale-95">
+          <Link to="/dashboard/games/recall" className="btn-primary mt-6 group-hover:bg-primary-700 w-full flex items-center justify-center">
             {t.play_now} <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
         </Card>

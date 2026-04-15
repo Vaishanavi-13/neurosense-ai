@@ -59,7 +59,7 @@ export default function SpeechTasksIndex() {
             </div>
             <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-3">{task.title}</h3>
             <p className="text-muted text-sm flex-1 leading-relaxed">{task.description}</p>
-            <div className="mt-6 w-full py-3 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium rounded-xl hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+            <div className="mt-6 w-full py-3 btn-primary rounded-xl transition-colors">
               {t.start_task}
             </div>
           </div>

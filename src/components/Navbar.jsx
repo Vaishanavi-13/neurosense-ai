@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { Bell, User, Sun, Moon, Languages } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { useApp } from '../hooks/useApp';
+import ThemeLanguageToggle from './ThemeLanguageToggle';
 
 export default function Navbar() {
   const { user } = useAuth();
@@ -19,30 +20,7 @@ export default function Navbar() {
       </div>
 
       <div className="flex items-center space-x-2 md:space-x-4">
-        {/* Language Toggle */}
-        <div className="flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg p-1">
-          <button 
-            onClick={() => setLanguage('en')}
-            className={`px-2 py-1 text-xs font-bold rounded-md transition-all ${language === 'en' ? 'bg-white dark:bg-slate-700 text-primary-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
-          >
-            EN
-          </button>
-          <button 
-            onClick={() => setLanguage('mr')}
-            className={`px-2 py-1 text-xs font-bold rounded-md transition-all ${language === 'mr' ? 'bg-white dark:bg-slate-700 text-primary-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
-          >
-            मराठी
-          </button>
-        </div>
-
-        {/* Theme Toggle */}
-        <button 
-          onClick={toggleTheme}
-          className="p-2 text-slate-500 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
-          title={theme === 'light' ? t.switch_dark : t.switch_light}
-        >
-          {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
-        </button>
+        <ThemeLanguageToggle />
 
         <button className="text-slate-500 dark:text-slate-300 hover:text-primary-600 relative transition-colors p-2 md:p-0">
           <Bell className="h-5 w-5" />

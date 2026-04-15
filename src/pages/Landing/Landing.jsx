@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { BrainCircuit, ShieldAlert, Gamepad2, TrendingUp, ArrowRight } from 'lucide-react';
 import { useApp } from '../../hooks/useApp';
+import ThemeLanguageToggle from '../../components/ThemeLanguageToggle';
 
 export default function Landing() {
   const { t } = useApp();
@@ -16,9 +17,11 @@ export default function Landing() {
             NeuroSense-AI
           </span>
         </div>
-        <div className="space-x-4">
-          <Link to="/login" className="text-slate-600 dark:text-slate-300 font-medium hover:text-primary-600">{t.login}</Link>
-          <Link to="/register" className="btn-primary">{t.get_started}</Link>
+        <div className="flex items-center space-x-4">
+          <ThemeLanguageToggle />
+          <div className="h-6 w-px bg-slate-200 dark:bg-slate-700 hidden md:block"></div>
+          <Link to="/login" className="text-slate-600 dark:text-slate-300 font-medium hover:text-primary-600 whitespace-nowrap">{t.login}</Link>
+          <Link to="/register" className="btn-primary whitespace-nowrap">{t.get_started}</Link>
         </div>
       </nav>
 

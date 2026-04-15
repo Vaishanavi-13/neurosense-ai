@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useApp } from '../../hooks/useApp';
 import { BrainCircuit } from 'lucide-react';
+import ThemeLanguageToggle from '../../components/ThemeLanguageToggle';
 
 export default function Login() {
   const [email, setEmail] = useState('user@test.com'); // Pre-filled for demo
@@ -28,7 +29,10 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-4 transition-colors duration-200">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-4 transition-colors duration-200 relative">
+      <div className="absolute top-4 right-4 z-10">
+        <ThemeLanguageToggle />
+      </div>
       <div className="max-w-md w-full bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-800 p-8">
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-primary-50 dark:bg-primary-900/30 mb-4">
