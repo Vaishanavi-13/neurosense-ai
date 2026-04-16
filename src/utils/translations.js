@@ -317,6 +317,22 @@ export const translations = {
     feature_games_desc: "Scientifically designed games to test and improve memory and recall.",
     feature_tracking_title: "Progress Tracking",
     feature_tracking_desc: "Detailed longitudinal tracking to monitor your performance over time.",
+
+    // Chatbot
+    bot_greeting: "Hello! I am your NeuroSense assistant. Let's do a quick activity to check your memory.",
+    bot_q_name: "What is your name?",
+    bot_q_age: "How old are you?",
+    bot_q_day: "What day of the week is it today?",
+    bot_q_remember: "Please try to remember these 3 words: Apple, Chair, Blue. Type 'OK' when you are ready.",
+    bot_q_recall: "Great. Now, what were the 3 words I just asked you to remember?",
+    bot_result_prefix: "Thank you for answering! Based on your responses, your screening result indicates:",
+    bot_normal: "Normal Baseline - No immediate memory issues detected.",
+    bot_mild: "Mild Risk - Partial memory recall issues detected.",
+    bot_high: "High Risk - Immediate recall issues detected. We recommend completing the full assessment.",
+    bot_complete: "You can view your detailed platform risk composite by clicking the button below.",
+    bot_btn_risk: "View Risk Assessment",
+    bot_type_placeholder: "Type your message...",
+    bot_tooltip: "Chat with Assistant",
   },
   mr: {
     // Navbar
@@ -636,5 +652,21 @@ export const translations = {
     feature_games_desc: "स्मरणशक्ती तपासण्यासाठी आणि सुधारण्यासाठी वैज्ञानिकदृष्ट्या डिझाइन केलेले खेळ.",
     feature_tracking_title: "प्रगती ट्रॅकिंग",
     feature_tracking_desc: "कालांतराने तुमच्या कामगिरीचे निरीक्षण करण्यासाठी तपशीलवार प्रगती ट्रॅकिंग.",
+    
+    // Chatbot
+    bot_greeting: "नमस्कार! मी तुमचा न्यूरोसेन्स (NeuroSense) सहाय्यक आहे. चला स्मरणशक्ती तपासण्यासाठी एक छोटी ॲक्टिव्हिटी करूया.",
+    bot_q_name: "तुमचे नाव काय आहे?",
+    bot_q_age: "तुमचे वय किती आहे?",
+    bot_q_day: "आज आठवड्याचा कोणता वार आहे?",
+    bot_q_remember: "कृपया हे ३ शब्द लक्षात ठेवण्याचा प्रयत्न करा: सफरचंद (Apple), खुर्ची (Chair), निळा (Blue). तयार झाल्यावर 'OK' टाइप करा.",
+    bot_q_recall: "उत्तम. आता, मी तुम्हाला लक्षात ठेवायला सांगितलेले ते ३ शब्द कोणते होते?",
+    bot_result_prefix: "उत्तरे दिल्याबद्दल धन्यवाद! तुमच्या प्रतिसादांच्या आधारे, तुमचा निकालाचा अंदाज आहे:",
+    bot_normal: "सामान्य - स्मरणशक्तीच्या कोणत्याही मोठ्या समस्या नाहीत.",
+    bot_mild: "कमी जोखीम - थोड्या प्रमाणात स्मरणशक्तीच्या समस्या जाणवल्या.",
+    bot_high: "जास्त जोखीम - तात्काळ स्मरणशक्तीच्या समस्या आढळल्या. आम्ही पूर्ण 'जोखीम मूल्यांकन' करण्याचा सल्ला देतो.",
+    bot_complete: "खालील बटणावर क्लिक करून तुमचा सविस्तर जोखीम अहवाल पाहू शकता.",
+    bot_btn_risk: "जोखीम मूल्यांकन पहा",
+    bot_type_placeholder: "तुमचा संदेश टाइप करा...",
+    bot_tooltip: "सहाय्यकासोबत चॅट करा",
   }
 };

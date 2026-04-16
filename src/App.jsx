@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './hooks/useAuth';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
+import Chatbot from './components/Chatbot';
 
 // Pages
 import Landing from './pages/Landing/Landing';
@@ -36,11 +37,12 @@ const AuthLayout = ({ children }) => {
   return (
     <div className="flex h-screen bg-slate-50 dark:bg-slate-950 overflow-hidden transition-colors duration-200">
       <Sidebar />
-      <div className="flex flex-col flex-1 overflow-hidden">
+      <div className="flex flex-col flex-1 overflow-hidden relative">
         <Navbar />
         <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
           {children}
         </main>
+        <Chatbot />
       </div>
     </div>
   );
